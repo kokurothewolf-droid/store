@@ -410,6 +410,7 @@
 
   <div class="trust-bar">
     <div class="trust-item"><span class="trust-dot"></span>Ships directly to you</div>
+    <div class="trust-item"><span class="trust-dot" style="background:#5cb85c"></span>Free US shipping</div>
     <div class="trust-item"><span class="trust-dot"></span>$25 deposit · balance after approval</div>
     <div class="trust-item"><span class="trust-dot"></span>7–10 day turnaround</div>
     <div class="trust-item"><span class="trust-dot"></span>100% custom design</div>
@@ -815,7 +816,7 @@ function renderProduct(id) {
       <div class="pdp-info-cat">${getCategoryLabel(p.category)}</div>
       <h1 class="pdp-name">${p.name}</h1>
       <div class="pdp-price"><sup>$</sup>${p.price}</div>
-      <div class="pdp-price-note">Includes custom design · Shipping calculated at checkout</div>
+      <div class="pdp-price-note">Includes custom design · <span style="color:#5cb85c;font-weight:600">Free US shipping</span></div>
       <p class="pdp-desc">${p.long_desc}</p>
 
       <div class="pdp-section-h">What's included</div>
@@ -931,7 +932,8 @@ function renderCart() {
     ${itemsHtml}
     <div class="cart-totals">
       <div class="total-row"><span>Subtotal</span><span>$${ subtotal}</span></div>
-      <div class="total-row"><span>Shipping</span><span>Calculated at fulfillment</span></div>
+      <div class="total-row"><span>Shipping (US orders)</span><span style="color:#5cb85c;font-weight:600">FREE</span></div>
+      <div class="total-row" style="font-size:11px;color:var(--text-dim);padding-top:0;padding-bottom:4px"><span colspan="2">International orders: shipping quoted separately after checkout</span></div>
       <div class="total-row grand"><span>Commission Total</span><span>$${subtotal}</span></div>
       <div class="total-row" style="color:var(--red-bright);font-weight:600"><span>Due today (deposit)</span><span>$25</span></div>
       <div class="total-row" style="font-size:12px"><span>Due after mockup approval</span><span>$${subtotal - 25 > 0 ? subtotal - 25 : 0}</span></div>
@@ -964,6 +966,7 @@ function renderCheckout() {
         <div class="checkout-section-sub">${cart.length} item${cart.length !== 1 ? 's' : ''}</div>
         ${itemSummary}
         <div style="display:flex;justify-content:space-between;font-weight:600;font-size:16px;color:var(--text);padding-top:12px"><span>Total</span><span>$${subtotal}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding-top:8px"><span>Shipping (US)</span><span style="color:#5cb85c;font-weight:600">FREE</span></div>
       <div style="margin-top:16px;background:rgba(192,57,43,0.08);border:1px solid var(--red-dim);border-radius:6px;padding:12px 14px;">
         <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Due today: $25 design deposit</div>
         <div style="font-size:12px;color:var(--text-muted);line-height:1.6">The remaining <span id="balanceDue">$${subtotal - 25 > 0 ? subtotal - 25 : 0}</span> is due only after you approve your mockup. Nothing is printed until you say so.</div>
@@ -1104,8 +1107,20 @@ function renderCheckout() {
           </div>
           <div class="pdp-form-row">
             <label class="pdp-label">Country <span class="req">*</span></label>
-            <input type="text" name="country" class="pdp-input" value="United States" required>
+            <select name="country" class="pdp-select" required onchange="handleCountryChange(this.value)">
+              <option value="United States">United States 🇺🇸 — Free Shipping</option>
+              <option value="Canada">Canada</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Australia">Australia</option>
+              <option value="Germany">Germany</option>
+              <option value="France">France</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="Other">Other country...</option>
+            </select>
           </div>
+        </div>
+        <div id="intlShippingNotice" style="display:none;margin-top:12px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.3);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.7">
+          <strong style="color:var(--gold)">International order:</strong> Printful ships worldwide, but international shipping isn't free — rates vary by destination and typically run $15–30+. After you submit, I'll confirm your exact shipping cost before anything is printed. You only pay the balance (including shipping) after you approve your mockup.
         </div>
       </div>
 
@@ -1347,6 +1362,11 @@ async function submitCommission(e) {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit & Await Deposit Link →';
   }
+}
+
+function handleCountryChange(val) {
+  const notice = document.getElementById('intlShippingNotice');
+  if (notice) notice.style.display = val === 'United States' ? 'none' : 'block';
 }
 
 // ========== UTILITY ==========
