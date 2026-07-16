@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-<script src="https://www.paypal.com/sdk/js?client-id=BAAZ_LCBpaksDwK5aIHKl9_HSoyd5mHFJuOVPRJHHDRBa7rxvcvlB05wEoTAa9wetxLm4l7Qlt3JGUpxEQ&components=hosted-buttons&enable-funding=venmo&currency=USD" crossorigin="anonymous" async></script>
 <style>
   /* ============================================================
      KOKURO CUSTOMS — "Con Floor Pop" theme
@@ -164,13 +163,6 @@
   }
   .nav-logo span { color: var(--primary); }
   .nav-right { display: flex; align-items: center; gap: 12px; }
-  .cur-select { font-family: 'Lilita One', sans-serif; font-size: 13px; letter-spacing: .02em; color: var(--ink); background: var(--paper); border: var(--border-w) solid var(--ink); border-radius: 999px; padding: 7px 28px 7px 12px; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23231a12' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; transition: transform .12s, box-shadow .12s; }
-  .cur-select:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
-  .cur-select:focus { outline: none; border-color: var(--primary); }
-  .p2p-only { display: contents; }
-  body[data-cur="EUR"] .p2p-only, body[data-cur="CAD"] .p2p-only { display: none; }
-  .intl-pay-note { display: none; font-family: 'Outfit', sans-serif; font-size: 12px; color: var(--ink-soft); background: var(--paper-2); border: 2px solid var(--ink); border-radius: 10px; padding: 10px 12px; line-height: 1.5; }
-  body[data-cur="EUR"] .intl-pay-note, body[data-cur="CAD"] .intl-pay-note { display: block; }
   .cart-btn {
     background: var(--paper);
     border: var(--border-w) solid var(--ink);
@@ -493,15 +485,6 @@
   .pdp-info-cat { font-family: 'Lilita One', sans-serif; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
   .pdp-name { font-family: 'Bagel Fat One', sans-serif; font-size: clamp(38px, 5vw, 52px); letter-spacing: -.01em; line-height: 1; margin-bottom: 16px; color: var(--ink); }
   .pdp-price { font-family: 'Bagel Fat One', sans-serif; font-size: 44px; color: var(--ink); margin-bottom: 6px; line-height: 1; }
-  .pdp-price-from {
-    font-family: 'Lilita One', sans-serif;
-    font-size: 14px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    vertical-align: middle;
-    margin-right: 8px;
-  }
   .pdp-price sup { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 700; vertical-align: super; line-height: 1; margin-right: 2px; }
   .pdp-price-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 24px; font-weight: 500; }
   .pdp-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 24px; font-weight: 500; }
@@ -707,12 +690,10 @@
   .pay-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
   .pay-btn-venmo { background: #008CFF; color: #fff; }
   .pay-btn-cashapp { background: #00D632; color: #000; }
-  .pay-btn-paypal { background: #003087; color: #fff; }
   .pay-btn-left { display: flex; align-items: center; gap: 12px; }
   .pay-btn-logo { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; flex-shrink: 0; border: 2px solid currentColor; }
   .pay-btn-logo-venmo { background: rgba(255,255,255,0.2); color: #fff; }
   .pay-btn-logo-cashapp { background: rgba(0,0,0,0.1); color: #000; }
-  .pay-btn-logo-paypal { background: rgba(255,255,255,0.2); color: #fff; }
   .pay-btn-name { display: block; font-size: 15px; font-weight: 700; }
   .pay-btn-handle { display: block; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 500; opacity: .8; margin-top: 1px; letter-spacing: 0; }
   .pay-btn-amount { font-family: 'Bagel Fat One', sans-serif; font-size: 24px; letter-spacing: .02em; }
@@ -773,53 +754,25 @@
   .tweaks-close { position: absolute; top: 8px; right: 10px; font-size: 18px; color: var(--ink-soft); cursor: pointer; line-height: 1; }
   .tweaks-close:hover { color: var(--primary); }
 
-  /* KOKURO MASCOT (shopping buddy — CLIMBS the page) --------- */
-  /* The wrap must NOT establish a containing block — the global
-     `body > * { position: relative }` rule would otherwise trap the
-     absolutely-positioned mascot inside the wrap (which sits near the
-     bottom of the document source). */
-  .kokuro-mascot-wrap { position: static; }
+  /* KOKURO MASCOT (shopping buddy) --------------------------- */
   .kokuro-mascot {
-    /* absolute so it can perch on any DOM element; JS sets top/left */
-    position: absolute; top: 80px; left: 18px; z-index: 9500;
+    position: fixed; bottom: 18px; left: 18px; z-index: 9500;
     width: 140px; height: 140px;
     cursor: pointer;
-    --rot: 0deg;
-    transform: rotate(var(--rot));
-    transition:
-      top  1.35s cubic-bezier(.34,1.35,.64,1),
-      left 1.35s cubic-bezier(.34,1.35,.64,1),
-      transform .35s cubic-bezier(.34,1.56,.64,1);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1);
     filter: drop-shadow(3px 4px 0 var(--ink));
     user-select: none;
     -webkit-user-drag: none;
-    will-change: top, left, transform;
   }
   .kokuro-mascot img {
     width: 100%; height: 100%; object-fit: contain;
     pointer-events: none;
     animation: kokuro-bob 3s ease-in-out infinite;
   }
-  .kokuro-mascot:hover { transform: rotate(var(--rot)) scale(1.06); }
+  .kokuro-mascot:hover { transform: scale(1.05) rotate(-3deg); }
   .kokuro-mascot.entering { animation: kokuro-enter .6s cubic-bezier(.34,1.6,.64,1); }
   .kokuro-mascot.shake img { animation: kokuro-shake .45s cubic-bezier(.36,.07,.19,.97) !important; }
   .kokuro-mascot.panic img { animation: kokuro-panic .15s linear infinite !important; }
-  /* While traveling between perches, do an energetic run-wiggle */
-  .kokuro-mascot.travelling img { animation: kokuro-run .32s ease-in-out infinite !important; }
-  @keyframes kokuro-run {
-    0%   { transform: translateY(0)  rotate(-6deg); }
-    25%  { transform: translateY(-7px) rotate( 4deg); }
-    50%  { transform: translateY(0)  rotate(-3deg); }
-    75%  { transform: translateY(-5px) rotate( 6deg); }
-    100% { transform: translateY(0)  rotate(-6deg); }
-  }
-  /* Tiny "landed" squash when arriving at a new perch */
-  .kokuro-mascot.landed { animation: kokuro-land .35s cubic-bezier(.34,1.7,.64,1); }
-  @keyframes kokuro-land {
-    0%   { transform: rotate(var(--rot)) scale(1.18, 0.82); }
-    60%  { transform: rotate(var(--rot)) scale(0.94, 1.08); }
-    100% { transform: rotate(var(--rot)) scale(1, 1); }
-  }
   @keyframes kokuro-enter {
     0% { transform: translateY(180px) rotate(-25deg); opacity: 0; }
     100% { transform: translateY(0) rotate(0); opacity: 1; }
@@ -863,8 +816,7 @@
     100% { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(.9); opacity: 0; }
   }
   .kokuro-bubble {
-    /* Absolute — follows the climbing mascot via JS */
-    position: absolute; top: 0; left: 0; z-index: 9499;
+    position: fixed; bottom: 175px; left: 18px; z-index: 9499;
     background: var(--paper);
     border: var(--border-w) solid var(--ink);
     border-radius: 16px;
@@ -877,7 +829,7 @@
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px) rotate(-2deg);
-    transition: opacity .25s, transform .25s, top .9s cubic-bezier(.34,1.35,.64,1), left .9s cubic-bezier(.34,1.35,.64,1);
+    transition: opacity .25s, transform .25s;
     line-height: 1.3;
     letter-spacing: .005em;
   }
@@ -905,7 +857,7 @@
     pointer-events: none;
   }
   .kokuro-mute-btn {
-    position: absolute; top: 0; left: 0; z-index: 9501;
+    position: fixed; bottom: 160px; left: 22px; z-index: 9501;
     width: 28px; height: 28px;
     background: var(--paper);
     border: 2px solid var(--ink);
@@ -914,14 +866,14 @@
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 2px 2px 0 var(--ink);
-    opacity: 0;
-    transition: opacity .2s, top .9s cubic-bezier(.34,1.35,.64,1), left .9s cubic-bezier(.34,1.35,.64,1);
+    opacity: 0; transition: opacity .2s;
     color: var(--ink);
   }
   .kokuro-mascot-wrap:hover .kokuro-mute-btn { opacity: 1; }
   @media(max-width:600px) {
-    .kokuro-mascot { width: 90px; height: 90px; }
-    .kokuro-bubble { font-size: 13px; max-width: 200px; padding: 10px 14px; }
+    .kokuro-mascot { width: 90px; height: 90px; bottom: 12px; left: 12px; }
+    .kokuro-bubble { bottom: 115px; left: 12px; font-size: 13px; max-width: 200px; padding: 10px 14px; }
+    .kokuro-mute-btn { bottom: 100px; left: 14px; }
   }
   .kokuro-mascot.hidden-mascot, .kokuro-bubble.hidden-mascot, .kokuro-mute-btn.hidden-mascot { display: none !important; }
 
@@ -964,18 +916,14 @@
 
   /* ROUTING */
   .page { display: none; }
-  .page.active { display: block; }</style>
+  .page.active { display: block; }
+</style>
 </head>
 <body>
 
 <nav>
   <a class="nav-logo" href="/"><span>KOKURO</span> CUSTOMS</a>
   <div class="nav-right">
-    <select class="cur-select" id="curSelect" onchange="setCurrency(this.value)" aria-label="Currency">
-      <option value="USD">🇺🇸 USD</option>
-      <option value="EUR">🇪🇺 EUR</option>
-      <option value="CAD">🇨🇦 CAD</option>
-    </select>
     <a class="cart-btn" href="/cart">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <span>Cart</span>
@@ -1065,10 +1013,10 @@
     <p class="section-sub">From your ref sheet to your doorstep. No surprises.</p>
     <div class="how-grid">
       <div class="how-step"><div class="how-num">01</div><div class="how-title">Browse & build your cart</div><div class="how-body">Pick your items, choose sizes, and fill in jersey details. Add as many pieces as you want — your fursona details are collected once at checkout.</div></div>
-      <div class="how-step"><div class="how-num">02</div><div class="how-title">Submit & send deposit</div><div class="how-body">Upload your ref sheet, fill in your fursona details, and pay the $25-per-item design deposit via Venmo (@kokurothewolf), Cash App ($kokurothewolf), or PayPal right at checkout. This locks your slot.</div></div>
+      <div class="how-step"><div class="how-num">02</div><div class="how-title">Submit & send $25 deposit</div><div class="how-body">Upload your ref sheet, fill in your fursona details, and pay the $25 design deposit via Venmo (@kokurothewolf) or Cash App ($kokurothewolf) right at checkout. This locks your slot.</div></div>
       <div class="how-step"><div class="how-num">03</div><div class="how-title">I design your piece</div><div class="how-body">Once your deposit is confirmed I get to work. I'll send a full mockup within 3–5 business days via your preferred contact — email, Discord, TikTok, or Instagram DM.</div></div>
       <div class="how-step"><div class="how-num">04</div><div class="how-title">Two rounds of revisions</div><div class="how-body">Not feeling it? Tell me what to change. Two full revision rounds are included free. I won't move forward until you're happy with the design.</div></div>
-      <div class="how-step"><div class="how-num">05</div><div class="how-title">Approve & pay balance</div><div class="how-body">Once you approve the final mockup, pay the remaining balance via Venmo, Cash App, or PayPal. Nothing goes to print until you've signed off and the balance is cleared.</div></div>
+      <div class="how-step"><div class="how-num">05</div><div class="how-title">Approve & pay balance</div><div class="how-body">Once you approve the final mockup, pay the remaining balance via Venmo or Cash App. Nothing goes to print until you've signed off and the balance is cleared.</div></div>
       <div class="how-step"><div class="how-num">06</div><div class="how-title">Printed & shipped to you</div><div class="how-body">Your piece ships directly from the print studio to your door. I'll send your tracking number the moment it ships — usually arrives in 5–7 days.</div></div>
     </div>
   </section>
@@ -1081,7 +1029,7 @@
     <div class="faq-list">
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I add a QR code to my design? <span class="faq-icon">+</span></button><div class="faq-a">Yes — and it's free. Include the URL you want it to link to during checkout. The QR code gets designed into your piece (not slapped on top) so it looks intentional.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need an official ref sheet? <span class="faq-icon">+</span></button><div class="faq-a">No formal ref sheet required — but the more detail you give me, the better. At minimum, I need 2–3 images of your fursona showing main colors and markings, plus your character's name and any specific elements you want included.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does payment work? <span class="faq-icon">+</span></button><div class="faq-a">A non-refundable design deposit of $25 per distinct item is due within 24 hours of submitting — this locks your slot and covers design time. Once you approve your mockup, you pay the remaining balance and the order goes to print. You never pay full price for something you haven't seen and approved.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does payment work? <span class="faq-icon">+</span></button><div class="faq-a">A $25 non-refundable design deposit is due within 24 hours of submitting — this locks your slot and covers design time. Once you approve your mockup, you pay the remaining balance and the order goes to print. You never pay full price for something you haven't seen and approved.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I order multiple items? <span class="faq-icon">+</span></button><div class="faq-a">Yes — that's exactly what the cart is for. Add multiple items, customize each one, and submit them all at once. Bundles often save you money on shipping.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What if I don't like the design? <span class="faq-icon">+</span></button><div class="faq-a">Every commission includes two free revision rounds. If the mockup needs changes, just tell me what to adjust. Additional revisions after the second are $10 each. I won't print until you've approved.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do you ship internationally? <span class="faq-icon">+</span></button><div class="faq-a">Yes — my print partner ships worldwide. International shipping varies by location. I'll let you know the shipping amount before you finalize.</div></div>
@@ -1127,7 +1075,7 @@
   <div class="success-page">
     <div class="success-check">✓</div>
     <h1 class="success-title">Awoo! Submitted.</h1>
-    <p class="success-body">Thank you! Your commission request has been received. I'll review everything and send a <strong>design deposit link</strong> within 24 hours via your preferred contact method.<br><br>Once the deposit is paid, I'll get started on your design and send you a mockup within 3–5 business days. The remaining balance is only due after you approve the final design.</p>
+    <p class="success-body">Thank you! Your commission request has been received. I'll review everything and send a <strong>$25 design deposit link</strong> within 24 hours via your preferred contact method.<br><br>Once the deposit is paid, I'll get started on your design and send you a mockup within 3–5 business days. The remaining balance is only due after you approve the final design.</p>
     <button class="btn-primary" onclick="navigate('home')">Back to Catalog</button>
   </div>
 </div>
@@ -1392,243 +1340,6 @@ function kokuroContext(ctxKey) {
   kokuroSay(pickQuip(c.pool));
 }
 
-// ========== KOKURO CLIMBING ENGINE ==========
-// Per-page targets — Kokuro climbs/perches on real elements and reacts to them.
-// anchor: where on the target's box to perch — 'top','topleft','topright','right','left',
-//         'bottomleft','bottomright','bottom','inside'
-// dx/dy: nudge in pixels after anchor compute. rot: rotation in degrees.
-const KOKURO_PAGE_TARGETS = {
-  home: [
-    { selector: '.hero-title .accent-word', anchor: 'topright', pose: 'wink',     tag: 'HI',    rot: -10, dx:  -8 },
-    { selector: '.hero-badge',              anchor: 'topleft',  pose: 'heythere', tag: 'PSST',  rot:  10, dx:  -8 },
-    { selector: '.trust-bar',               anchor: 'topright', pose: 'cool',     tag: 'OK',    rot:  -6, dx: -60 },
-    { selector: '.qr-feature',              anchor: 'topright', pose: 'smirk',    tag: 'OOH',   rot:   8, dx: -20 },
-    { selector: '#products-section .product-card:nth-child(1)', anchor: 'topright', pose: 'drool',    tag: 'GIMME', rot: -10 },
-    { selector: '#products-section .product-card:nth-child(4)', anchor: 'topleft',  pose: 'blush',    tag: '<3',    rot:   8 },
-    { selector: '#products-section .product-card:nth-child(7)', anchor: 'right',    pose: 'bliss',    tag: 'YES',   rot:  -4, dx: -30 },
-    { selector: '#how-it-works .section-title', anchor: 'topright', pose: 'laughing', tag: 'LMAO', rot: -8 },
-    { selector: '#how-it-works .step:nth-child(3)', anchor: 'topleft', pose: 'cool', tag: 'EZ', rot: 8 },
-    { selector: 'footer',                   anchor: 'top',      pose: 'sleep',    tag: 'ZZZ',   rot:  -3 },
-  ],
-  product: [
-    { selector: '.pdp-main-img',  anchor: 'topright', pose: 'drool',    tag: 'GIMME', rot: -10, dx: -10 },
-    { selector: '.pdp-name',      anchor: 'right',    pose: 'wink',     tag: ';)',    rot:  -6, dx: -20 },
-    { selector: '.pdp-price',     anchor: 'right',    pose: 'smirk',    tag: '$$',    rot:   4, dx: -10 },
-    { selector: '.pdp-features',  anchor: 'topleft',  pose: 'heythere', tag: 'YO',    rot:   8 },
-    { selector: '.pdp-form',      anchor: 'topright', pose: 'cool',     tag: 'PICK',  rot:  -6, dx: -10 },
-    { selector: '.pdp-add-btn',   anchor: 'topright', pose: 'bliss',    tag: 'GO',    rot:  -8, dx: -20 },
-  ],
-  cart_full: [
-    { selector: '.cart-item:nth-child(1) .cart-item-img', anchor: 'topright', pose: 'drool',    tag: 'OOH',   rot: -8, dx: -10 },
-    { selector: '.cart-item:nth-child(2)',                anchor: 'topleft',  pose: 'bliss',    tag: '<3',    rot:  8 },
-    { selector: '.cart-item:nth-child(3) .cart-item-price', anchor: 'right',  pose: 'smirk',    tag: '$$$',   rot: -6, dx: -20 },
-    { selector: '.cart-totals',                           anchor: 'topright', pose: 'drool',    tag: 'YES',   rot: -10, dx: -20 },
-    { selector: '.cart-totals',                           anchor: 'top',      pose: 'wink',     tag: '$$',    rot:   4 },
-  ],
-  cart_empty: [
-    { selector: '.cart-empty-title',     anchor: 'topright', pose: 'lonely',   tag: ':(',    rot:  -8 },
-    { selector: '.cart-empty-sub',       anchor: 'topleft',  pose: 'facepalm', tag: 'BRUH',  rot:   8 },
-    { selector: '.cart-empty .btn-primary', anchor: 'topright', pose: 'wink',  tag: 'GO!',   rot:  -6, dx: -10 },
-  ],
-  checkout: [
-    { selector: '.checkout-section:nth-of-type(1)', anchor: 'topright', pose: 'smirk',    tag: 'CART', rot:  -8, dx: -10 },
-    { selector: '.checkout-section:nth-of-type(2)', anchor: 'topleft',  pose: 'wink',     tag: ';)',   rot:   8 },
-    { selector: '.checkout-section:nth-of-type(3)', anchor: 'topright', pose: 'cool',     tag: 'PICS', rot:  -6, dx: -10 },
-    { selector: '.checkout-section:nth-of-type(5)', anchor: 'topleft',  pose: 'heythere', tag: 'YO',   rot:   8 },
-    { selector: '.checkout-section:nth-of-type(6)', anchor: 'right',    pose: 'blush',    tag: '<3',   rot:  -4, dx: -20 },
-    { selector: '.checkout-section:nth-last-of-type(2)', anchor: 'topright', pose: 'bliss', tag: 'PAY', rot: -10, dx: -10 },
-  ],
-  success: [
-    { selector: '.success-check', anchor: 'topright', pose: 'bliss',  tag: 'YAY!', rot: -12, dx: -10 },
-    { selector: '.success-title', anchor: 'topleft',  pose: 'thanks', tag: 'TY!',  rot:  10 },
-    { selector: '.success-body',  anchor: 'right',    pose: 'blush',  tag: '<3',   rot:  -4, dx: -20 },
-  ],
-};
-
-let kokuroClimb = {
-  targets: [],
-  index: 0,
-  timer: null,
-  poseTimer: null,
-  currentPage: null,
-};
-
-function computeKokuroAnchor(target) {
-  const el = document.querySelector(target.selector);
-  if (!el) return null;
-  const m = document.getElementById('kokuroMascot');
-  const w = m.offsetWidth  || 140;
-  const h = m.offsetHeight || 140;
-  const r = el.getBoundingClientRect();
-  // skip zero-size or invisible elements
-  if (r.width === 0 && r.height === 0) return null;
-  const sx = window.scrollX || window.pageXOffset || 0;
-  const sy = window.scrollY || window.pageYOffset || 0;
-  const cx = r.left + sx, cy = r.top + sy;
-  let left, top;
-  switch (target.anchor) {
-    case 'top':         left = cx + r.width/2 - w/2;     top = cy - h*0.62; break;
-    case 'topright':    left = cx + r.width - w*0.45;    top = cy - h*0.55; break;
-    case 'topleft':     left = cx - w*0.55;              top = cy - h*0.55; break;
-    case 'right':       left = cx + r.width - w*0.30;    top = cy + r.height/2 - h/2; break;
-    case 'left':        left = cx - w*0.70;              top = cy + r.height/2 - h/2; break;
-    case 'bottom':      left = cx + r.width/2 - w/2;     top = cy + r.height - h*0.30; break;
-    case 'bottomright': left = cx + r.width - w*0.55;    top = cy + r.height - h*0.55; break;
-    case 'bottomleft':  left = cx - w*0.45;              top = cy + r.height - h*0.55; break;
-    case 'inside':      left = cx + r.width - w*0.92;    top = cy + r.height - h*0.92; break;
-    default:            left = cx; top = cy;
-  }
-  // Clamp horizontally so the mascot stays inside the document
-  const docW = document.documentElement.clientWidth;
-  left = Math.max(6, Math.min(left + (target.dx || 0), docW - w - 6));
-  top  = Math.max(8, top + (target.dy || 0));
-  return { left, top };
-}
-
-function positionKokuroChrome() {
-  const m = document.getElementById('kokuroMascot');
-  const b = document.getElementById('kokuroBubble');
-  const mu = document.getElementById('kokuroMuteBtn');
-  if (!m) return;
-  const left = parseFloat(m.style.left) || 0;
-  const top  = parseFloat(m.style.top)  || 0;
-  const w = m.offsetWidth, h = m.offsetHeight;
-  if (b) {
-    // Bubble above-and-to-right of the mascot. Clamp to viewport horizontally.
-    let bx = left + w * 0.32;
-    const docW = document.documentElement.clientWidth;
-    bx = Math.max(8, Math.min(bx, docW - b.offsetWidth - 8));
-    b.style.left = bx + 'px';
-    b.style.top  = (top - 64) + 'px';
-  }
-  if (mu) {
-    mu.style.left = (left + w - 32) + 'px';
-    mu.style.top  = (top + 6) + 'px';
-  }
-}
-
-function moveKokuroTo(target, opts) {
-  opts = opts || {};
-  const m = document.getElementById('kokuroMascot');
-  if (!m || !target) return false;
-  const pos = computeKokuroAnchor(target);
-  if (!pos) return false;
-  // Travel: energetic wiggle pose while in transit
-  m.classList.add('travelling');
-  m.classList.remove('landed');
-  if (!opts.skipTravelPose) {
-    kokuroSetPose(['heythere','hi'][Math.floor(Math.random()*2)]);
-  }
-  // Move
-  m.style.left = pos.left + 'px';
-  m.style.top  = pos.top  + 'px';
-  m.style.setProperty('--rot', (target.rot || 0) + 'deg');
-  positionKokuroChrome();
-  // Settle into the target pose after travel
-  clearTimeout(kokuroClimb.poseTimer);
-  const travelMs = opts.travelMs != null ? opts.travelMs : 950;
-  kokuroClimb.poseTimer = setTimeout(() => {
-    m.classList.remove('travelling');
-    m.classList.add('landed');
-    setTimeout(() => m.classList.remove('landed'), 380);
-    if (target.pose) kokuroSetPose(target.pose);
-    if (target.tag) {
-      const tagEl = document.getElementById('kokuroTag');
-      if (tagEl) tagEl.textContent = target.tag;
-    }
-    positionKokuroChrome();
-  }, travelMs);
-  return true;
-}
-
-function pickPageTargets(page) {
-  if (page === 'cart') {
-    return (window.cart && window.cart.length > 0)
-      ? KOKURO_PAGE_TARGETS.cart_full
-      : KOKURO_PAGE_TARGETS.cart_empty;
-  }
-  return KOKURO_PAGE_TARGETS[page] || KOKURO_PAGE_TARGETS.home;
-}
-
-function kokuroFirstReachableIndex(targets, start) {
-  if (!targets.length) return -1;
-  for (let i = 0; i < targets.length; i++) {
-    const idx = (start + i) % targets.length;
-    if (document.querySelector(targets[idx].selector)) return idx;
-  }
-  return -1;
-}
-
-function kokuroStartClimbing(page) {
-  clearInterval(kokuroClimb.timer);
-  clearTimeout(kokuroClimb.poseTimer);
-  kokuroClimb.currentPage = page;
-  kokuroClimb.targets = pickPageTargets(page);
-  kokuroClimb.index = 0;
-  // Tiny delay so the just-rendered page DOM has settled
-  setTimeout(() => {
-    const idx = kokuroFirstReachableIndex(kokuroClimb.targets, 0);
-    if (idx < 0) return;
-    kokuroClimb.index = idx;
-    moveKokuroTo(kokuroClimb.targets[idx], { skipTravelPose: true, travelMs: 700 });
-  }, 320);
-  // Cycle perches
-  kokuroClimb.timer = setInterval(() => {
-    if (!kokuroClimb.targets.length) return;
-    // Skip past missing elements
-    const next = kokuroFirstReachableIndex(kokuroClimb.targets, kokuroClimb.index + 1);
-    if (next < 0) return;
-    kokuroClimb.index = next;
-    moveKokuroTo(kokuroClimb.targets[kokuroClimb.index]);
-  }, 7200);
-}
-
-// Re-track on resize / layout shifts — instantly snap to current target.
-function kokuroRetrack() {
-  if (!kokuroClimb.targets.length) return;
-  const t = kokuroClimb.targets[kokuroClimb.index];
-  if (!t) return;
-  const m = document.getElementById('kokuroMascot');
-  const b = document.getElementById('kokuroBubble');
-  const mu = document.getElementById('kokuroMuteBtn');
-  if (!m) return;
-  const prev = m.style.transition;
-  const prevB = b ? b.style.transition : '';
-  const prevMu = mu ? mu.style.transition : '';
-  m.style.transition = 'none';
-  if (b) b.style.transition = 'opacity .25s, transform .25s';
-  if (mu) mu.style.transition = 'opacity .2s';
-  const pos = computeKokuroAnchor(t);
-  if (pos) {
-    m.style.left = pos.left + 'px';
-    m.style.top  = pos.top  + 'px';
-    positionKokuroChrome();
-  }
-  requestAnimationFrame(() => {
-    m.style.transition = prev;
-    if (b) b.style.transition = prevB;
-    if (mu) mu.style.transition = prevMu;
-  });
-}
-window.addEventListener('resize', kokuroRetrack);
-// Re-check periodically — sticky elements and reflows can shift things.
-setInterval(() => {
-  if (!kokuroClimb.targets.length) return;
-  const t = kokuroClimb.targets[kokuroClimb.index];
-  if (!t) return;
-  const m = document.getElementById('kokuroMascot');
-  if (!m || m.classList.contains('travelling')) return;
-  const pos = computeKokuroAnchor(t);
-  if (!pos) return;
-  const curLeft = parseFloat(m.style.left) || 0;
-  const curTop  = parseFloat(m.style.top)  || 0;
-  if (Math.abs(pos.left - curLeft) > 4 || Math.abs(pos.top - curTop) > 4) {
-    m.style.left = pos.left + 'px';
-    m.style.top  = pos.top  + 'px';
-    positionKokuroChrome();
-  }
-}, 1500);
-
 function kokuroIdleLoop() {
   clearInterval(kokuroState.idleTimer);
   kokuroState.idleTimer = setInterval(() => {
@@ -1742,8 +1453,6 @@ window.addEventListener('DOMContentLoaded', () => {
         else kokuroContext('cart_view');
       } else if (page === 'checkout') kokuroContext('checkout');
       else if (page === 'success') kokuroContext('success');
-      // Start climbing the new page
-      kokuroStartClimbing(page);
     };
   }
 
@@ -1759,24 +1468,9 @@ window.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Re-climb when the cart changes on the cart page (empty <-> full)
-  const _origRemoveFromCart = window.removeFromCart;
-  if (typeof _origRemoveFromCart === 'function') {
-    window.removeFromCart = function(id) {
-      _origRemoveFromCart(id);
-      if (kokuroClimb.currentPage === 'cart') kokuroStartClimbing('cart');
-    };
-  }
-
-  // Kick off idle loop + initial climbing + intro
+  // Kick off idle loop + initial context after entrance animation
   kokuroIdleLoop();
-  setTimeout(() => {
-    kokuroContext('home_intro');
-    // Determine initial page from location
-    const parts = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
-    const initPage = parts[0] || 'home';
-    kokuroStartClimbing(initPage);
-  }, 700);
+  setTimeout(() => kokuroContext('home_intro'), 700);
 });
 
 // ========== PAW BURST CONFETTI ==========
@@ -1890,39 +1584,8 @@ const ASSET_BASE = location.pathname.endsWith('.html')
   ? location.pathname.replace(/[^/]+$/, '')
   : '/';
 
-// ========== CURRENCY ==========
-// Prices are authored in USD; other currencies convert at a fixed rate.
-// Rates are approximate and re-confirmed at fulfillment.
-const CURRENCIES = {
-  USD: { code: 'USD', symbol: '$',   rate: 1,    tax: 0.08, taxName: 'Sales tax', region: 'United States', note: 'Sales tax estimated at 8% for US orders. The exact amount depends on your state and is calculated at fulfillment.', p2p: true },
-  EUR: { code: 'EUR', symbol: '\u20AC', rate: 0.92, tax: 0.21, taxName: 'VAT',       region: 'the EU',          note: 'EU VAT estimated at 21%. The exact rate depends on your country and is confirmed at fulfillment.', p2p: false },
-  CAD: { code: 'CAD', symbol: 'CA$', rate: 1.37, tax: 0.13, taxName: 'GST/HST',   region: 'Canada',         note: 'Canadian GST/HST estimated at 13%. The exact rate depends on your province and is confirmed at fulfillment.', p2p: false }
-};
-let currentCurrency = (function() { try { return localStorage.getItem('kokuro_currency') || 'USD'; } catch (e) { return 'USD'; } })();
-if (!CURRENCIES[currentCurrency]) currentCurrency = 'USD';
-function curCfg() { return CURRENCIES[currentCurrency]; }
-function money(usd) {
-  const c = curCfg(); const val = usd * c.rate;
-  const whole = Math.abs(val - Math.round(val)) < 0.005;
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: c.code, currencyDisplay: 'symbol', minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 }).format(val);
-}
-function moneyRound(usd) {
-  const c = curCfg();
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: c.code, currencyDisplay: 'symbol', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(usd * c.rate));
-}
-function taxRate() { return curCfg().tax; }
-function taxLabel() { return curCfg().taxName + ' (est. ' + Math.round(curCfg().tax * 100) + '%)'; }
-function setCurrency(code) {
-  if (!CURRENCIES[code]) return;
-  currentCurrency = code;
-  try { localStorage.setItem('kokuro_currency', code); } catch (e) {}
-  document.body.setAttribute('data-cur', code);
-  const cs = document.getElementById('curSelect'); if (cs) cs.value = code;
-  handleRoute();
-}
-
 // ========== PRODUCT DATA ==========
-const PRODUCTS = [{"id":"baseball-jersey","name":"Baseball Jersey","price":85,"category":"jersey","badge":null,"desc":"All-over sublimation print. Custom name, number, colors, and patches based on your fursona.","long_desc":"Our flagship piece. A button-front baseball jersey with full all-over sublimation printing means the entire jersey — front, back, sleeves, and side panels — becomes your canvas. Custom name across the chest, number on the back, sleeve patches, pinstripes, color blocking. The Kokuro jersey is the perfect example of what's possible.","features":["100% polyester sublimation fabric","Button-front athletic cut","Vibrant all-over print","Tagless interior","Machine washable cold"],"image":"assets/products/baseball-jersey.jpg","has_real_mockup":true,"mockup_back":"assets/products/baseball-jersey-back.jpg"},{"id":"hockey-jersey","name":"Hockey Jersey","price":95,"category":"jersey","badge":null,"desc":"Full sublimation hockey-cut jersey with lace-up collar.","long_desc":"Premium hockey-cut jersey with traditional lace-up collar. Custom name and number, shoulder patches, color-blocked yoke, and side striping. Looks just as good at a con as it does on the ice.","features":["Premium polyester construction","Traditional lace-up collar","Shoulder patch zones","Full color blocking","Machine washable cold"],"image":"assets/products/hockey-jersey.jpg","has_real_mockup":true},{"id":"basketball-jersey","name":"Basketball Jersey","price":75,"category":"jersey","badge":null,"desc":"Sleeveless sublimation jersey with custom name, number, and side panel design.","long_desc":"Sleeveless mesh basketball jersey with V-neck. Custom name across the chest, number on the back, side panel color blocking. Pairs perfectly with our matching athletic shorts for a full set.","features":["Lightweight mesh fabric","V-neck collar","Sleeveless athletic cut","Side panel zones","Machine washable cold"],"image":"assets/products/basketball-jersey.jpg","has_real_mockup":true},{"id":"unisex-tee","name":"Men's Crew Neck Tee","price":50,"category":"tops","badge":null,"desc":"All-over print cotton crew neck tee. Custom fursona graphic front and back.","long_desc":"Premium cotton crew neck tee with full all-over print. Your fursona design covers the whole garment. Soft and built for everyday wear.","features":["100% combed cotton","Crew neck","All-over sublimation print","Reinforced seams","Machine washable warm"],"image":"assets/products/unisex-tee.jpg","has_real_mockup":true},{"id":"tank-top","name":"Tank Top","price":45,"category":"tops","badge":null,"desc":"Lightweight sublimation tank with all-over design.","long_desc":"All-over print sublimation tank top. Great for warm weather, conventions, and athletic wear. Your full fursona design wraps around the entire garment.","features":["Lightweight polyester","All-over sublimation print","Athletic racerback option","Breathable construction","Machine washable cold"],"image":"assets/products/tank-top.jpg","has_real_mockup":true},{"id":"button-up","name":"Button-Up Shirt","price":70,"category":"tops","badge":null,"desc":"All-over print unisex button shirt. Custom fursona design front and back.","long_desc":"Casual button-up with full all-over sublimation. Show off your full fursona design front and back. Perfect for furry events where you want to look put-together but still on-theme.","features":["Polyester sublimation fabric","Classic collar and button placket","Short sleeve","All-over print front and back","Machine washable cold"],"image":"assets/products/button-up.jpg","has_real_mockup":true},{"id":"pullover-hoodie","name":"Pullover Hoodie","price":80,"category":"outerwear","badge":"Best Seller","desc":"Heavy recycled fleece pullover with double-lined hood and custom design.","long_desc":"Cozy fleece pullover hoodie with custom embroidered or sublimated design. Front kangaroo pocket, drawstring hood, and your fursona on a comfortable everyday staple.","features":["Recycled cotton-poly blend","Double-lined hood","Drop shoulders","Front kangaroo pocket","White or black drawstrings","Machine washable cold"],"image":"assets/products/pullover-hoodie.jpg","has_real_mockup":true,"mockup_back":"assets/products/pullover-hoodie-back.jpg"},{"id":"athletic-shorts","name":"Athletic Shorts","price":60,"category":"bottoms","badge":null,"desc":"Sublimation athletic shorts with custom design.","long_desc":"Lightweight athletic shorts with custom side panel and waistband design. Match with your basketball or baseball jersey for a full set. Drawstring waist and side pockets.","features":["Lightweight polyester","Drawstring elastic waist","Side pockets","All-over sublimation print","Machine washable cold"],"image":"assets/products/athletic-shorts.jpg","has_real_mockup":true},{"id":"joggers","name":"Wide-Leg Joggers","price":75,"category":"bottoms","badge":null,"desc":"All-over print wide-leg joggers. Relaxed oversized fit with full custom fursona design.","long_desc":"Wide-leg relaxed fit joggers with all-over sublimation print. Your fursona design covers the full garment. Drawstring waist, side pockets, and elastic cuffs.","features":["Polyester athletic fabric","Tapered fit with elastic cuffs","Side pockets","Drawstring waist","Machine washable cold"],"image":"assets/products/joggers.jpg","has_real_mockup":true},{"id":"track-pants","name":"Track Pants","price":70,"category":"bottoms","badge":null,"desc":"Full sublimation track pants with custom design.","long_desc":"Athletic track pants with custom side stripe, waistband design, and full fursona color scheme. Pairs perfectly with a matching jersey for a full athletic fit.","features":["Lightweight athletic polyester","Side pockets","Drawstring waist","Tapered ankle","Machine washable cold"],"image":"assets/products/track-pants.jpg","has_real_mockup":true},{"id":"snapback","name":"Snapback Cap","price":45,"category":"headwear","badge":null,"desc":"Structured flat-brim snapback with custom embroidery.","long_desc":"Structured flat-brim snapback with custom embroidered front panel featuring your fursona's icon, initials, or logo. Snap closure for adjustable fit.","features":["Structured 6-panel design","Flat brim","Snap closure","Custom embroidered front","Premium poly-cotton blend"],"image":"assets/products/snapback.jpg","has_real_mockup":true},{"id":"iphone-case","name":"MagSafe iPhone Case","price":45,"category":"accessories","badge":null,"desc":"Tough MagSafe case with full custom print. Fits most iPhone models.","long_desc":"Dual-layer tough case with MagSafe and full sublimation print. Drop-tested with raised camera bezel.","features":["MagSafe compatible","Dual-layer drop protection","Full sublimation print","Raised camera bezel","iPhone 13 through 16 series"],"image":"assets/products/iphone-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"samsung-case","name":"Samsung Tough Case","price":40,"category":"accessories","badge":null,"desc":"Tough dual-layer Samsung case with full custom print.","long_desc":"Dual-layer tough case with full sublimation print and precise cutouts. Drop-tested protection for most Galaxy models.","features":["Dual-layer construction","Full sublimation print","Precise cutouts","Raised camera bezel","Most Samsung Galaxy models"],"image":"assets/products/samsung-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"tote","name":"Tote Bag","price":40,"category":"accessories","badge":null,"desc":"Natural cotton tote with custom full-color print.","long_desc":"Heavy-duty natural cotton tote bag with custom full-color print. Perfect for furry meets, conventions, grocery runs, and carrying your daily essentials.","features":["100% cotton canvas","15\"x16\" carrying capacity","Reinforced handles","Single full-color print","Machine washable cold"],"image":"assets/products/tote.jpg","has_real_mockup":true},{"id":"patch","name":"Embroidered Patch","price":25,"category":"accessories","badge":null,"desc":"Custom embroidered patch with iron-on or sew-on backing.","long_desc":"Premium embroidered patch featuring your fursona or design element. Iron-on or sew-on backing. Add it to jackets, backpacks, vests anywhere.","features":["Premium thread embroidery","Iron-on or sew-on backing","Up to 4 inch diameter","Up to 8 colors","Packaged individually"],"image":"assets/products/patch.jpg","has_real_mockup":true},{"id":"tumbler","name":"Skinny Tumbler","price":45,"category":"drinkware","badge":null,"desc":"20oz stainless steel tumbler with full wrap design.","long_desc":"20oz stainless steel insulated tumbler with lid and metal straw. Full wrap custom sublimation print featuring your fursona. Keeps drinks cold for 24 hours or hot for 12.","features":["20oz capacity","Double-wall vacuum insulation","Stainless steel construction","Includes lid and metal straw","Full wrap sublimation print","Hand wash recommended"],"image":"assets/products/tumbler.jpg","has_real_mockup":true},{"id":"travel-mug","name":"Travel Mug","price":45,"category":"drinkware","badge":null,"desc":"25oz insulated travel mug with handle and custom print.","long_desc":"25oz stainless steel insulated travel mug with handle and clear sip lid. Full custom print with your fursona design. Keeps drinks hot or cold for hours. Great for commutes, cons, and everyday use.","features":["25oz capacity","Stainless steel insulated","Handle with comfortable grip","Clear sip lid","Custom sublimation print","Hand wash recommended"],"image":"assets/products/travel-mug.jpg","has_real_mockup":true,"mockup_back":null},{"id":"boxers","name":"Boxer Briefs","price":40,"category":"underwear","badge":"Best Seller","desc":"All-over print boxer briefs with custom fursona design.","long_desc":"All-over print boxer briefs with your fursona splashed across the entire garment — front, back, sides. Soft polyester-spandex blend with 4-way stretch and a branded waistband. Perfect for sleepwear, lounging, or just because.","features":["Polyester-spandex blend","All-over sublimation print","Branded waistband","4-way stretch","Machine washable cold"],"image":"assets/products/boxers.jpg","has_real_mockup":true,"mockup_back":"assets/products/boxers-back.jpg"},{"id":"bandana","name":"Bandana","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print bandana.","long_desc":"Soft satin bandana with all-over custom print. Wear it as a headwrap, neck wrap, wrist tie, or accessory. Great standalone piece or part of a full fursona outfit. 22\"x22\".","features":["Soft satin polyester","22\"x22\" square","All-over sublimation print","Hemmed edges","Machine washable cold"],"image":"assets/products/bandana.jpg","has_real_mockup":true},{"id":"pin-buttons","name":"Pin Buttons","price":20,"category":"accessories","badge":null,"desc":"Set of 3 custom pin buttons featuring your fursona design.","long_desc":"Set of 3 custom full-color pin buttons in mix of sizes. Perfect for bags, lanyards, jackets, and trading at cons.","features":["Set of 3 buttons","Mix of 3 sizes","Full-color print","Safety pin backing","Durable mylar coating"],"image":"assets/products/pin-buttons.jpg","has_real_mockup":true,"mockup_back":null},{"id":"neck-gaiter","name":"Neck Gaiter","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print neck gaiter. Wear as mask, headband, or neck wrap.","long_desc":"Stretchy all-over print neck gaiter with your fursona design. Wear as face covering, headband, or neck warmer. Con staple especially with snout and muzzle designs.","features":["Stretchy polyester","All-over sublimation print","Multiple wear styles","Seamless tubular construction","Machine washable cold"],"image":"assets/products/neck-gaiter.jpg","has_real_mockup":true,"mockup_back":null},{"id":"high-top-shoes","name":"Men's High-Top Canvas Shoes","price":95,"category":"footwear","badge":null,"desc":"Custom high-top canvas sneakers with all-over print of your fursona.","long_desc":"Walk in your fursona. High-top canvas shoes with custom all-over sublimation printing across both the inner and outer panels, plus the tongue. White rubber sole, metal eyelets, white laces. Designed to your ref sheet — colors, markings, claws, accents — all yours.","features":["Custom all-over print on canvas upper","Padded collar for ankle support","Metal eyelets, white laces","Vulcanized rubber sole","Men's US sizes 5–13"],"image":"assets/products/high-top-shoes.jpg","has_real_mockup":true},{"id":"pet-collar","name":"Pet Collar (Wink Wink)","price":30,"category":"pets","badge":"Top Tier","desc":"For your real-life four-legged companion. Or, you know. Whoever's wearing it.","long_desc":"Officially: a custom-printed adjustable collar for your IRL pet — cat, small dog, medium dog. We sublimate your fursona, your name, a matching design to your jersey, whatever you want, onto soft polyester webbing with a comfy black-lined interior, an adjustable buckle, and a D-ring for tags and a leash.\n\nUnofficially: we know our audience. We're not gonna ask what you're doing with it. Kokuro is a professional. Kokuro does not judge. Kokuro just designs really nice collars.","features":["Soft 100% polyester webbing with full-color sublimation","Black lining + padding (comfy for necks of all species)","Adjustable metal buckle, 1\" (2.54 cm) width","D-ring rated for a leash, tags, or… whatever you clip on it 👀","Three sizes: S, M, L — see chart for neck range","No questions asked. Truly. We will not ask."],"image":"assets/products/pet-collar.jpg","mockup_back":"assets/products/pet-collar-back.jpg","has_real_mockup":true},{"id":"sherpa-blanket","name":"Sublimated Sherpa Blanket","price":55,"sizePrices":{"Throw":55,"Twin":65,"Queen":85},"category":"home","badge":"New","desc":"Custom sherpa blanket with full-color sublimation print on top, plush sherpa on the back. Three sizes.","long_desc":"Wrap yourself in your fursona. Velvety microfiber on top with a full-color, all-over sublimation print, plus warm white sherpa on the reverse. The entire top surface is your canvas — single big fursona portrait, repeating pattern, full ref-sheet collage, totally your call. Comes in three sizes: a personal-size throw, a generous twin, and a flat-out enormous queen. Couch nap with character.","features":["Full-color sublimation print across the entire top","Velvety microfiber face, plush white sherpa back","Three sizes — Throw (37\"×57\"), Twin (50\"×60\"), Queen (60\"×80\")","Hemmed edges, no fraying","Machine washable cold, tumble dry low"],"image":null,"has_real_mockup":false,"mockup_back":null},{"id":"letterman-jacket","name":"Heavyweight Letterman Jacket","price":115,"category":"outerwear","badge":"New","desc":"Heavyweight varsity jacket with contrast sleeves and snap closure. Custom DTF print on the chest, back, and both sleeves.","long_desc":"Big varsity energy. A heavyweight letterman with a structured fit, ribbed knit collar / cuffs / waistband, contrast color sleeves, and a snap-button front. Brushed fleece interior for warmth. We DTF-print your fursona art on the left chest, the full back, and down both long sleeves — perfect for crew logos, your name, your @, a full back illustration, or all four.\n\nNot all-over print: design lives on placed print zones (chest patch, back panel, sleeve runs). Pairs with the pullover hoodie if you're building a full kit.","features":["80% ring-spun cotton, 20% polyester (Heather Grey: 65/35)","Heavyweight 9.73 oz/yd² (330 g/m²) — built for fall/winter","Brushed fleece interior, ribbed knit collar / cuffs / waistband","Snap-button front, slash side pockets, contrast sleeves","DTF print zones: left chest, full back, both long sleeves","OEKO-TEX Standard 100 certified blank"],"image":"assets/products/letterman-jacket.png","has_real_mockup":true,"mockup_back":null,"sizes":["S","M","L","XL","2XL","3XL"]}];
+const PRODUCTS = [{"id":"baseball-jersey","name":"Baseball Jersey","price":85,"category":"jersey","badge":null,"desc":"All-over sublimation print. Custom name, number, colors, and patches based on your fursona.","long_desc":"Our flagship piece. A button-front baseball jersey with full all-over sublimation printing means the entire jersey — front, back, sleeves, and side panels — becomes your canvas. Custom name across the chest, number on the back, sleeve patches, pinstripes, color blocking. The Kokuro jersey is the perfect example of what's possible.","features":["100% polyester sublimation fabric","Button-front athletic cut","Vibrant all-over print","Tagless interior","Machine washable cold"],"image":"assets/products/baseball-jersey.jpg","has_real_mockup":true,"mockup_back":"assets/products/baseball-jersey-back.jpg"},{"id":"hockey-jersey","name":"Hockey Jersey","price":95,"category":"jersey","badge":null,"desc":"Full sublimation hockey-cut jersey with lace-up collar.","long_desc":"Premium hockey-cut jersey with traditional lace-up collar. Custom name and number, shoulder patches, color-blocked yoke, and side striping. Looks just as good at a con as it does on the ice.","features":["Premium polyester construction","Traditional lace-up collar","Shoulder patch zones","Full color blocking","Machine washable cold"],"image":"assets/products/hockey-jersey.jpg","has_real_mockup":true},{"id":"basketball-jersey","name":"Basketball Jersey","price":75,"category":"jersey","badge":null,"desc":"Sleeveless sublimation jersey with custom name, number, and side panel design.","long_desc":"Sleeveless mesh basketball jersey with V-neck. Custom name across the chest, number on the back, side panel color blocking. Pairs perfectly with our matching athletic shorts for a full set.","features":["Lightweight mesh fabric","V-neck collar","Sleeveless athletic cut","Side panel zones","Machine washable cold"],"image":"assets/products/basketball-jersey.jpg","has_real_mockup":true},{"id":"unisex-tee","name":"Men's Crew Neck Tee","price":50,"category":"tops","badge":null,"desc":"All-over print cotton crew neck tee. Custom fursona graphic front and back.","long_desc":"Premium cotton crew neck tee with full all-over print. Your fursona design covers the whole garment. Soft and built for everyday wear.","features":["100% combed cotton","Crew neck","All-over sublimation print","Reinforced seams","Machine washable warm"],"image":"assets/products/unisex-tee.jpg","has_real_mockup":true},{"id":"tank-top","name":"Tank Top","price":45,"category":"tops","badge":null,"desc":"Lightweight sublimation tank with all-over design.","long_desc":"All-over print sublimation tank top. Great for warm weather, conventions, and athletic wear. Your full fursona design wraps around the entire garment.","features":["Lightweight polyester","All-over sublimation print","Athletic racerback option","Breathable construction","Machine washable cold"],"image":"assets/products/tank-top.jpg","has_real_mockup":true},{"id":"button-up","name":"Button-Up Shirt","price":70,"category":"tops","badge":null,"desc":"All-over print unisex button shirt. Custom fursona design front and back.","long_desc":"Casual button-up with full all-over sublimation. Show off your full fursona design front and back. Perfect for furry events where you want to look put-together but still on-theme.","features":["Polyester sublimation fabric","Classic collar and button placket","Short sleeve","All-over print front and back","Machine washable cold"],"image":"assets/products/button-up.jpg","has_real_mockup":true},{"id":"pullover-hoodie","name":"Pullover Hoodie","price":80,"category":"outerwear","badge":"Best Seller","desc":"Heavy recycled fleece pullover with double-lined hood and custom design.","long_desc":"Cozy fleece pullover hoodie with custom embroidered or sublimated design. Front kangaroo pocket, drawstring hood, and your fursona on a comfortable everyday staple.","features":["Recycled cotton-poly blend","Double-lined hood","Drop shoulders","Front kangaroo pocket","White or black drawstrings","Machine washable cold"],"image":"assets/products/pullover-hoodie.jpg","has_real_mockup":true,"mockup_back":"assets/products/pullover-hoodie-back.jpg"},{"id":"athletic-shorts","name":"Athletic Shorts","price":60,"category":"bottoms","badge":null,"desc":"Sublimation athletic shorts with custom design.","long_desc":"Lightweight athletic shorts with custom side panel and waistband design. Match with your basketball or baseball jersey for a full set. Drawstring waist and side pockets.","features":["Lightweight polyester","Drawstring elastic waist","Side pockets","All-over sublimation print","Machine washable cold"],"image":"assets/products/athletic-shorts.jpg","has_real_mockup":true},{"id":"joggers","name":"Wide-Leg Joggers","price":75,"category":"bottoms","badge":null,"desc":"All-over print wide-leg joggers. Relaxed oversized fit with full custom fursona design.","long_desc":"Wide-leg relaxed fit joggers with all-over sublimation print. Your fursona design covers the full garment. Drawstring waist, side pockets, and elastic cuffs.","features":["Polyester athletic fabric","Tapered fit with elastic cuffs","Side pockets","Drawstring waist","Machine washable cold"],"image":"assets/products/joggers.jpg","has_real_mockup":true},{"id":"track-pants","name":"Track Pants","price":70,"category":"bottoms","badge":null,"desc":"Full sublimation track pants with custom design.","long_desc":"Athletic track pants with custom side stripe, waistband design, and full fursona color scheme. Pairs perfectly with a matching jersey for a full athletic fit.","features":["Lightweight athletic polyester","Side pockets","Drawstring waist","Tapered ankle","Machine washable cold"],"image":"assets/products/track-pants.jpg","has_real_mockup":true},{"id":"snapback","name":"Snapback Cap","price":45,"category":"headwear","badge":null,"desc":"Structured flat-brim snapback with custom embroidery.","long_desc":"Structured flat-brim snapback with custom embroidered front panel featuring your fursona's icon, initials, or logo. Snap closure for adjustable fit.","features":["Structured 6-panel design","Flat brim","Snap closure","Custom embroidered front","Premium poly-cotton blend"],"image":"assets/products/snapback.jpg","has_real_mockup":true},{"id":"iphone-case","name":"MagSafe iPhone Case","price":45,"category":"accessories","badge":null,"desc":"Tough MagSafe case with full custom print. Fits most iPhone models.","long_desc":"Dual-layer tough case with MagSafe and full sublimation print. Drop-tested with raised camera bezel.","features":["MagSafe compatible","Dual-layer drop protection","Full sublimation print","Raised camera bezel","iPhone 13 through 16 series"],"image":"assets/products/iphone-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"samsung-case","name":"Samsung Tough Case","price":40,"category":"accessories","badge":null,"desc":"Tough dual-layer Samsung case with full custom print.","long_desc":"Dual-layer tough case with full sublimation print and precise cutouts. Drop-tested protection for most Galaxy models.","features":["Dual-layer construction","Full sublimation print","Precise cutouts","Raised camera bezel","Most Samsung Galaxy models"],"image":"assets/products/samsung-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"tote","name":"Tote Bag","price":40,"category":"accessories","badge":null,"desc":"Natural cotton tote with custom full-color print.","long_desc":"Heavy-duty natural cotton tote bag with custom full-color print. Perfect for furry meets, conventions, grocery runs, and carrying your daily essentials.","features":["100% cotton canvas","15\"x16\" carrying capacity","Reinforced handles","Single full-color print","Machine washable cold"],"image":"assets/products/tote.jpg","has_real_mockup":true},{"id":"patch","name":"Embroidered Patch","price":25,"category":"accessories","badge":null,"desc":"Custom embroidered patch with iron-on or sew-on backing.","long_desc":"Premium embroidered patch featuring your fursona or design element. Iron-on or sew-on backing. Add it to jackets, backpacks, vests anywhere.","features":["Premium thread embroidery","Iron-on or sew-on backing","Up to 4 inch diameter","Up to 8 colors","Packaged individually"],"image":"assets/products/patch.jpg","has_real_mockup":true},{"id":"tumbler","name":"Skinny Tumbler","price":45,"category":"drinkware","badge":null,"desc":"20oz stainless steel tumbler with full wrap design.","long_desc":"20oz stainless steel insulated tumbler with lid and metal straw. Full wrap custom sublimation print featuring your fursona. Keeps drinks cold for 24 hours or hot for 12.","features":["20oz capacity","Double-wall vacuum insulation","Stainless steel construction","Includes lid and metal straw","Full wrap sublimation print","Hand wash recommended"],"image":"assets/products/tumbler.jpg","has_real_mockup":true},{"id":"travel-mug","name":"Travel Mug","price":45,"category":"drinkware","badge":null,"desc":"25oz insulated travel mug with handle and custom print.","long_desc":"25oz stainless steel insulated travel mug with handle and clear sip lid. Full custom print with your fursona design. Keeps drinks hot or cold for hours. Great for commutes, cons, and everyday use.","features":["25oz capacity","Stainless steel insulated","Handle with comfortable grip","Clear sip lid","Custom sublimation print","Hand wash recommended"],"image":"assets/products/travel-mug.jpg","has_real_mockup":true,"mockup_back":null},{"id":"boxers","name":"Boxer Briefs","price":40,"category":"underwear","badge":"Best Seller","desc":"All-over print boxer briefs with custom fursona design.","long_desc":"All-over print boxer briefs with your fursona splashed across the entire garment — front, back, sides. Soft polyester-spandex blend with 4-way stretch and a branded waistband. Perfect for sleepwear, lounging, or just because.","features":["Polyester-spandex blend","All-over sublimation print","Branded waistband","4-way stretch","Machine washable cold"],"image":"assets/products/boxers.jpg","has_real_mockup":true,"mockup_back":"assets/products/boxers-back.jpg"},{"id":"bandana","name":"Bandana","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print bandana.","long_desc":"Soft satin bandana with all-over custom print. Wear it as a headwrap, neck wrap, wrist tie, or accessory. Great standalone piece or part of a full fursona outfit. 22\"x22\".","features":["Soft satin polyester","22\"x22\" square","All-over sublimation print","Hemmed edges","Machine washable cold"],"image":"assets/products/bandana.jpg","has_real_mockup":true},{"id":"pin-buttons","name":"Pin Buttons","price":20,"category":"accessories","badge":null,"desc":"Set of 3 custom pin buttons featuring your fursona design.","long_desc":"Set of 3 custom full-color pin buttons in mix of sizes. Perfect for bags, lanyards, jackets, and trading at cons.","features":["Set of 3 buttons","Mix of 3 sizes","Full-color print","Safety pin backing","Durable mylar coating"],"image":"assets/products/pin-buttons.jpg","has_real_mockup":true,"mockup_back":null},{"id":"neck-gaiter","name":"Neck Gaiter","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print neck gaiter. Wear as mask, headband, or neck wrap.","long_desc":"Stretchy all-over print neck gaiter with your fursona design. Wear as face covering, headband, or neck warmer. Con staple especially with snout and muzzle designs.","features":["Stretchy polyester","All-over sublimation print","Multiple wear styles","Seamless tubular construction","Machine washable cold"],"image":"assets/products/neck-gaiter.jpg","has_real_mockup":true,"mockup_back":null},{"id":"high-top-shoes","name":"Men's High-Top Canvas Shoes","price":95,"category":"footwear","badge":null,"desc":"Custom high-top canvas sneakers with all-over print of your fursona.","long_desc":"Walk in your fursona. High-top canvas shoes with custom all-over sublimation printing across both the inner and outer panels, plus the tongue. White rubber sole, metal eyelets, white laces. Designed to your ref sheet — colors, markings, claws, accents — all yours.","features":["Custom all-over print on canvas upper","Padded collar for ankle support","Metal eyelets, white laces","Vulcanized rubber sole","Men's US sizes 5–13"],"image":"assets/products/high-top-shoes.jpg","has_real_mockup":true},{"id":"pet-collar","name":"Pet Collar (Wink Wink)","price":30,"category":"pets","badge":"Top Tier","desc":"For your real-life four-legged companion. Or, you know. Whoever's wearing it.","long_desc":"Officially: a custom-printed adjustable collar for your IRL pet — cat, small dog, medium dog. We sublimate your fursona, your name, a matching design to your jersey, whatever you want, onto soft polyester webbing with a comfy black-lined interior, an adjustable buckle, and a D-ring for tags and a leash.\n\nUnofficially: we know our audience. We're not gonna ask what you're doing with it. Kokuro is a professional. Kokuro does not judge. Kokuro just designs really nice collars.","features":["Soft 100% polyester webbing with full-color sublimation","Black lining + padding (comfy for necks of all species)","Adjustable metal buckle, 1\" (2.54 cm) width","D-ring rated for a leash, tags, or… whatever you clip on it 👀","Three sizes: S, M, L — see chart for neck range","No questions asked. Truly. We will not ask."],"image":"assets/products/pet-collar.jpg","mockup_back":"assets/products/pet-collar-back.jpg","has_real_mockup":true}];
 
 const SIZE_CHARTS = {
   apparel: {
@@ -1954,14 +1617,6 @@ const SIZE_CHARTS = {
   underwear: {
     headers: ['Size','Waist (in)'],
     rows: [['XS','26–28'],['S','28–30'],['M','30–32'],['L','32–34'],['XL','34–36'],['2XL','36–38'],['3XL','38–40']]
-  },
-  blanket: {
-    headers: ['Size','Dimensions','Best For','Price'],
-    rows: [
-      ['Throw', '37" × 57"', 'Personal · lap',          '$55'],
-      ['Twin',  '50" × 60"', 'Couch · twin bed',        '$65'],
-      ['Queen', '60" × 80"', 'Larger bed · cosplay BG', '$85']
-    ]
   }
 };
 
@@ -1970,7 +1625,6 @@ function getSizeChartType(p) {
   if (p.category === 'bottoms') return 'bottoms';
   if (p.category === 'underwear') return 'underwear';
   if (p.category === 'drinkware') return 'drinkware';
-  if (p.category === 'home') return 'blanket';
   if (p.category === 'headwear') {
     if (p.id === 'fitted-cap') return 'fitted_hat';
     return 'hat';
@@ -2008,7 +1662,6 @@ function updateCartCount() {
 function pathFor(page, productId) {
   if (page === 'home') return '/';
   if (page === 'product' && productId) return '/product/' + productId;
-
   return '/' + page;
 }
 
@@ -2074,7 +1727,6 @@ const CATEGORIES = [
   { id: 'accessories', label: 'Accessories' },
   { id: 'drinkware', label: 'Drinkware' },
   { id: 'underwear', label: 'Underwear' },
-  { id: 'home', label: 'For Your Home' },
   { id: 'pets', label: 'For Your Pet' }
 ];
 
@@ -2130,7 +1782,7 @@ function renderProductCard(p) {
       <div class="product-name">${p.name}</div>
       <div class="product-desc">${p.desc}</div>
       <div class="product-footer">
-        <div class="product-price">${p.sizePrices ? `<span style="font-family:'Lilita One',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);vertical-align:middle;margin-right:6px">From</span>` : ''}${moneyRound(p.price)}</div>
+        <div class="product-price"><sup>$</sup>${p.price}</div>
         <span class="product-arrow">View Details →</span>
       </div>
     </div>
@@ -2138,7 +1790,7 @@ function renderProductCard(p) {
 }
 
 function getCategoryLabel(cat) {
-  const labels = { jersey: 'Jersey', tops: 'Tops', outerwear: 'Outerwear', bottoms: 'Bottoms', headwear: 'Headwear', accessories: 'Accessories', drinkware: 'Drinkware', underwear: 'Underwear', home: 'Home', footwear: 'Footwear', pets: 'For Your Pet' };
+  const labels = { jersey: 'Jersey', tops: 'Tops', outerwear: 'Outerwear', bottoms: 'Bottoms', headwear: 'Headwear', accessories: 'Accessories', drinkware: 'Drinkware', underwear: 'Underwear' };
   return labels[cat] || cat;
 }
 
@@ -2149,11 +1801,7 @@ function renderProduct(id) {
 
   document.getElementById('pdpBreadcrumb').textContent = p.name;
 
-  const fullChart = SIZE_CHARTS[getSizeChartType(p)];
-  // Optional per-product size filter — restrict which sizes from the chart are shown/orderable.
-  const sizeChart = p.sizes
-    ? { headers: fullChart.headers, rows: fullChart.rows.filter(r => p.sizes.includes(r[0])) }
-    : fullChart;
+  const sizeChart = SIZE_CHARTS[getSizeChartType(p)];
   const sizes = sizeChart.rows.map(r => r[0]);
 
   const mainImg = p.image
@@ -2164,28 +1812,18 @@ function renderProduct(id) {
     ? `<div class="pdp-thumb" onclick="swapPdpImg(this, '${p.mockup_back ? 'back' : ''}', '${p.id}')"><img src="${ASSET_BASE}${p.mockup_back}" alt="Back"></div>`
     : '';
 
-  const sizeNote = p.category === 'home'
-    ? 'Dimensions are finished blanket size. Sherpa side is white.'
-    : (p.category === 'drinkware' || p.category === 'accessories' || p.category === 'pets')
-      ? 'One-size-fits-most. See chart for exact dimensions.'
-      : 'Measurements are body measurements, not garment. Order one size up if between sizes.';
   const sizeChartHtml = `<table class="size-chart">
     <thead><tr>${sizeChart.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
     <tbody>${sizeChart.rows.map(row => `<tr>${row.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
   </table>
-  <div class="size-note">${sizeNote}</div>`;
+  <div class="size-note">Measurements are body measurements, not garment. Order one size up if between sizes.</div>`;
 
   // Build form
-  const sizeOptions = sizes.map(s => {
-    if (p.sizePrices && p.sizePrices[s] != null) return `<option value="${s}" data-price="${p.sizePrices[s]}">${s} — ${moneyRound(p.sizePrices[s])}</option>`;
-    return `<option value="${s}">${s}</option>`;
-  }).join('');
-  const sizeOnChange = p.sizePrices ? ` onchange="updateSizedPrice(this)"` : '';
   let formFields = `<div class="pdp-form-row">
     <label class="pdp-label">Size <span class="req">*</span></label>
-    <select class="pdp-select" id="pdpSize"${sizeOnChange} required>
+    <select class="pdp-select" id="pdpSize" required>
       <option value="">Select size...</option>
-      ${sizeOptions}
+      ${sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
     </select>
   </div>`;
 
@@ -2233,8 +1871,8 @@ function renderProduct(id) {
     <div class="pdp-info">
       <div class="pdp-info-cat">${getCategoryLabel(p.category)}</div>
       <h1 class="pdp-name">${p.name}</h1>
-      <div class="pdp-price" id="pdpPrice" data-base="${p.price}">${p.sizePrices ? `<span class="pdp-price-from">From </span>` : ''}<span id="pdpPriceAmt">${moneyRound(p.price)}</span></div>
-      <div class="pdp-price-note">${p.sizePrices ? 'Price varies by size · ' : ''}Includes custom design · Shipping calculated at checkout</div>
+      <div class="pdp-price"><sup>$</sup>${p.price}</div>
+      <div class="pdp-price-note">Includes custom design · Shipping calculated at checkout</div>
       <p class="pdp-desc">${p.long_desc}</p>
 
       <div class="pdp-section-h">What's included</div>
@@ -2259,25 +1897,6 @@ function swapPdpImg(thumb) {
   document.querySelector('.pdp-main-img img').src = newImg;
 }
 
-// Update the PDP price when a sized product's size changes
-function updateSizedPrice(sel) {
-  const opt = sel.options[sel.selectedIndex];
-  const price = opt && opt.dataset.price;
-  const priceWrap = document.getElementById('pdpPrice');
-  const amtEl = document.getElementById('pdpPriceAmt');
-  const fromEl = priceWrap ? priceWrap.querySelector('.pdp-price-from') : null;
-  if (!amtEl) return;
-  if (price) {
-    amtEl.textContent = moneyRound(Number(price));
-    if (fromEl) fromEl.style.display = 'none';
-  } else {
-    // Cleared selection — show base "From $X"
-    const base = priceWrap && priceWrap.dataset.base;
-    if (base) amtEl.textContent = moneyRound(Number(base));
-    if (fromEl) fromEl.style.display = '';
-  }
-}
-
 function addToCart(productId) {
   const p = PRODUCTS.find(x => x.id === productId);
   if (!p) return;
@@ -2294,7 +1913,7 @@ function addToCart(productId) {
     id: Date.now() + Math.random(),
     productId: p.id,
     name: p.name,
-    price: (p.sizePrices && p.sizePrices[size] != null) ? p.sizePrices[size] : p.price,
+    price: p.price,
     category: p.category,
     size: size,
     qty: parseInt(document.getElementById('pdpQty').value) || 1,
@@ -2352,14 +1971,14 @@ function renderCart() {
       ${imgHtml}
       <div>
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-meta">${moneyRound(item.price)} × ${item.qty}</div>
+        <div class="cart-item-meta">$${item.price} × ${item.qty}</div>
         ${specs}
         <div class="cart-item-actions">
           <button class="cart-action-btn danger" onclick="removeFromCart(${item.id})">Remove</button>
         </div>
       </div>
       <div class="cart-item-price-col">
-        <div class="cart-item-price">${money(lineTotal)}</div>
+        <div class="cart-item-price">$${lineTotal}</div>
       </div>
     </div>`;
   }).join('');
@@ -2368,13 +1987,13 @@ function renderCart() {
     <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px">${cart.length} item${cart.length !== 1 ? 's' : ''} · Review before checkout</p>
     ${itemsHtml}
     <div class="cart-totals">
-      <div class="total-row"><span>Subtotal</span><span>${money(subtotal)}</span></div>
-      <div class="total-row"><span>${taxLabel()}</span><span id="cartTaxAmt">${money(subtotal * taxRate())}</span></div>
+      <div class="total-row"><span>Subtotal</span><span>$${ subtotal}</span></div>
+      <div class="total-row"><span>Sales tax (est. 8%)</span><span id="cartTaxAmt">$${(subtotal * 0.08).toFixed(2)}</span></div>
       <div class="total-row"><span>Shipping</span><span>Calculated at fulfillment</span></div>
-      <div class="total-row grand"><span>Estimated Total</span><span>${money(subtotal * (1 + taxRate()))}</span></div>
-      <div class="total-row" style="color:var(--red-bright);font-weight:600"><span>Due today (deposit)</span><span>${money(cart.length * 25)}</span></div>
-      <div class="total-row" style="font-size:12px"><span>Due after mockup approval</span><span>${money(Math.max(0, subtotal * (1 + taxRate()) - cart.length * 25))}</span></div>
-      <div style="font-size:11px;color:var(--text-dim);padding:8px 0;line-height:1.6">${curCfg().note}</div>
+      <div class="total-row grand"><span>Estimated Total</span><span>$${(subtotal * 1.08).toFixed(2)}</span></div>
+      <div class="total-row" style="color:var(--red-bright);font-weight:600"><span>Due today (deposit)</span><span>$25</span></div>
+      <div class="total-row" style="font-size:12px"><span>Due after mockup approval</span><span>$${Math.max(0,(subtotal * 1.08 - 25).toFixed(2))}</span></div>
+      <div style="font-size:11px;color:var(--text-dim);padding:8px 0;line-height:1.6">Tax is estimated at 8%. Exact amount calculated at fulfillment based on your state. International customers: tax not included — I'll reach out directly.</div>
     </div>
     <div class="cart-actions-bar">
       <button class="btn-outline" onclick="navigate('home')">← Continue Shopping</button>
@@ -2391,9 +2010,7 @@ function removeFromCart(id) {
 // ========== CHECKOUT ==========
 function renderCheckout() {
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const distinctItems = cart.length;
-  const deposit = distinctItems * 25;
-  const itemSummary = cart.map(i => `<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--card-border)"><span>${i.name} (${i.size}) × ${i.qty}</span><span>${money(i.price * i.qty)}</span></div>`).join('');
+  const itemSummary = cart.map(i => `<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--card-border)"><span>${i.name} (${i.size}) × ${i.qty}</span><span>$${i.price * i.qty}</span></div>`).join('');
 
   document.getElementById('checkoutContent').innerHTML = `
     <h1 style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.03em;margin-bottom:8px">Checkout</h1>
@@ -2405,13 +2022,13 @@ function renderCheckout() {
         <div class="checkout-section-h">Order Summary</div>
         <div class="checkout-section-sub">${cart.length} item${cart.length !== 1 ? 's' : ''}</div>
         ${itemSummary}
-        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--text-muted)"><span>Subtotal</span><span>${money(subtotal)}</span></div>
-      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--text-muted)"><span>${taxLabel()}</span><span>${money(subtotal * taxRate())}</span></div>
-      <div style="display:flex;justify-content:space-between;font-weight:600;font-size:16px;color:var(--text);padding-top:10px;border-top:0.5px solid var(--card-border);margin-top:4px"><span>Estimated Total</span><span>${money(subtotal * (1 + taxRate()))}</span></div>
-      <div style="font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.6">${curCfg().note}</div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--text-muted)"><span>Subtotal</span><span>$${subtotal}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--text-muted)"><span>Estimated tax (8%)</span><span>$${(subtotal * 0.08).toFixed(2)}</span></div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;font-size:16px;color:var(--text);padding-top:10px;border-top:0.5px solid var(--card-border);margin-top:4px"><span>Estimated Total</span><span>$${(subtotal * 1.08).toFixed(2)}</span></div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.6">Tax estimated at 8% for US orders. Exact amount varies by state and is calculated at fulfillment. International customers — tax not included, I'll reach out directly.</div>
       <div style="margin-top:16px;background:rgba(192,57,43,0.08);border:1px solid var(--red-dim);border-radius:6px;padding:12px 14px;">
-        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Due today: ${money(deposit)} design deposit</div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.6">${money(25)} per distinct item being designed · ${distinctItems} item${distinctItems !== 1 ? "s" : ""} × ${money(25)} · remaining <span id="balanceDue">${money(Math.max(0, subtotal * (1 + taxRate()) - deposit))}</span> is due only after you approve your mockup. Nothing is printed until you say so.</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Due today: $25 design deposit</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.6">The remaining <span id="balanceDue">$${(Math.max(0, subtotal * 1.08 - 25)).toFixed(2)}</span> is due only after you approve your mockup. Nothing is printed until you say so.</div>
       </div>
       </div>
 
@@ -2454,7 +2071,7 @@ function renderCheckout() {
         <div class="checkout-section-h">Reference Files</div>
         <div class="checkout-section-sub">Send your ref sheet, sticker art, and any reference images directly after submitting. Higher resolution = better design quality.</div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
           <a href="https://instagram.com/kokurothewolf" target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderColor='var(--red-dim)'" onmouseout="this.style.borderColor='var(--card-border)'">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red-bright)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--red-bright)" stroke="none"/></svg>
             <div style="text-align:center">
@@ -2468,6 +2085,14 @@ function renderCheckout() {
               <div style="font-size:13px;font-weight:600;color:var(--text)">Telegram</div>
               <div style="font-size:11px;color:var(--text-muted);margin-top:2px">@kokurothewolf</div>
             </div>
+          </a>
+          <a href="#" onclick="navigator.clipboard&&navigator.clipboard.writeText('kokurothewolf');this.querySelector('.dc-copied').style.display='block';setTimeout(()=>this.querySelector('.dc-copied').style.display='none',2000);return false" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;text-decoration:none;cursor:pointer;transition:border-color .15s;position:relative" onmouseover="this.style.borderColor='var(--red-dim)'" onmouseout="this.style.borderColor='var(--card-border)'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red-bright)"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            <div style="text-align:center">
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Discord</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px">click to copy username</div>
+            </div>
+            <div class="dc-copied" style="display:none;position:absolute;top:8px;right:8px;font-size:10px;font-weight:600;background:var(--red);color:#fff;padding:2px 6px;border-radius:4px">Copied!</div>
           </a>
         </div>
 
@@ -2548,12 +2173,11 @@ function renderCheckout() {
 
 
       <div class="checkout-section">
-        <div class="checkout-section-h">Pay ${money(deposit)} Design Deposit</div>
-        <div class="checkout-section-sub">${money(25)} per distinct item being designed (${distinctItems} × ${money(25)}). Locks your commission slot. Balance is due only after you approve your mockup. Nothing is printed until you say so.</div>
+        <div class="checkout-section-h">Pay $25 Design Deposit</div>
+        <div class="checkout-section-sub">Locks your commission slot. Balance is due only after you approve your mockup. Nothing is printed until you say so.</div>
         <div class="payment-buttons">
-          <div class="p2p-only">
           <a class="pay-btn pay-btn-venmo"
-             href="https://venmo.com/u/kokurothewolf?txn=pay&amount=${deposit}&note=Kokuro%20Customs%20Design%20Deposit"
+             href="https://venmo.com/u/kokurothewolf?txn=pay&amount=25&note=Kokuro%20Customs%20Design%20Deposit"
              target="_blank" rel="noopener">
             <div class="pay-btn-left">
               <div class="pay-btn-logo pay-btn-logo-venmo">
@@ -2564,13 +2188,13 @@ function renderCheckout() {
                 <span class="pay-btn-handle">@kokurothewolf</span>
               </div>
             </div>
-            <span class="pay-btn-amount">${money(deposit)}</span>
+            <span class="pay-btn-amount">$25</span>
           </a>
 
           <div class="payment-divider"><span>or</span></div>
 
           <a class="pay-btn pay-btn-cashapp"
-             href="https://cash.app/$kokurothewolf/${deposit}"
+             href="https://cash.app/$kokurothewolf/25"
              target="_blank" rel="noopener">
             <div class="pay-btn-left">
               <div class="pay-btn-logo pay-btn-logo-cashapp">
@@ -2581,32 +2205,16 @@ function renderCheckout() {
                 <span class="pay-btn-handle">$kokurothewolf</span>
               </div>
             </div>
-            <span class="pay-btn-amount">${money(deposit)}</span>
+            <span class="pay-btn-amount">$25</span>
           </a>
-
-          <div class="payment-divider"><span>or</span></div>
-          </div>
-          <a class="pay-btn pay-btn-paypal" href="https://www.paypal.com/ncp/payment/ZXQU4E63VEKUA" target="_blank" rel="noopener">
-            <div class="pay-btn-left">
-              <div class="pay-btn-logo pay-btn-logo-paypal">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.048.288-.078.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/><path d="M21.83 7.46c-.86 4.418-3.805 5.946-7.565 5.946h-.58a.932.932 0 0 0-.923.788l-.816 5.09c-.072.454-.462.788-.922.788H7.14a.5.5 0 0 1-.494-.593l.04-.213 1.12-7.106.072-.39a1.05 1.05 0 0 1 1.05-.9h2.19c4.298 0 5.664-1.747 6.647-6.797z"/></svg>
-              </div>
-              <div class="pay-btn-info">
-                <span class="pay-btn-name">Pay with PayPal</span>
-                <span class="pay-btn-handle">Secure PayPal checkout</span>
-              </div>
-            </div>
-            <span class="pay-btn-amount">${money(deposit)}</span>
-          </a>
-          <div class="intl-pay-note">Venmo &amp; Cash App are US-only. Orders from ${curCfg().region} are billed in ${curCfg().code} via PayPal.</div>
         </div>
 
         <div class="txn-confirm">
           <div class="txn-confirm-title">Confirm your payment</div>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.6">After paying, enter your Venmo, Cash App, or PayPal transaction ID / username below so I can match your payment to your commission.</p>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.6">After paying, enter your Venmo or Cash App transaction ID or username below so I can match your payment to your commission.</p>
           <div class="pdp-form-row">
-            <label class="pdp-label">Your Venmo, Cash App, or PayPal username / email <span class="req">*</span></label>
-            <input type="text" name="paymentUsername" class="pdp-input" placeholder="e.g. @yourvenmo, $yourcashapp, or PayPal email" required>
+            <label class="pdp-label">Your Venmo or Cash App username <span class="req">*</span></label>
+            <input type="text" name="paymentUsername" class="pdp-input" placeholder="e.g. @yourvenmo or $yourcashapp" required>
           </div>
           <div class="pdp-form-row" style="margin-top:10px">
             <label class="pdp-label">Payment method used <span class="req">*</span></label>
@@ -2614,13 +2222,12 @@ function renderCheckout() {
               <option value="">Select...</option>
               <option>Venmo</option>
               <option>Cash App</option>
-              <option>PayPal</option>
             </select>
           </div>
           <div class="payment-note">
             Having trouble? DM me directly on
             <a href="https://venmo.com/u/kokurothewolf" target="_blank">Venmo</a> or
-            <a href="https://cash.app/$kokurothewolf" target="_blank">Cash App</a>, or <a href="https://www.paypal.com/ncp/payment/ZXQU4E63VEKUA" target="_blank">PayPal</a>.
+            <a href="https://cash.app/$kokurothewolf" target="_blank">Cash App</a>.
             Your slot is reserved once I confirm receipt — usually within a few hours.
           </div>
         </div>
@@ -2628,9 +2235,9 @@ function renderCheckout() {
 
       <div class="checkout-section">
         <div class="checkout-section-h">Agreements</div>
-        <label class="checkbox-row"><input type="checkbox" required><span><strong>Payment:</strong> I understand a <strong>non-refundable design deposit of $25 per item</strong> is due within 24 hours to lock my slot. The remaining balance is due only after I approve the final mockup — nothing is printed until then.</span></label>
+        <label class="checkbox-row"><input type="checkbox" required><span><strong>Payment:</strong> I understand a <strong>$25 non-refundable design deposit</strong> is due within 24 hours to lock my slot. The remaining balance is due only after I approve the final mockup — nothing is printed until then.</span></label>
         <label class="checkbox-row"><input type="checkbox" required><span><strong>Revisions:</strong> Two free revision rounds are included. Additional revisions are $10 each. Nothing prints until I approve the final mockup.</span></label>
-        <label class="checkbox-row"><input type="checkbox" required><span><strong>Refunds:</strong> The $25-per-item design deposit is non-refundable as it covers design labor. If I cancel after deposit but before approval, the deposit is forfeited. If I cancel before the deposit is paid, no charge applies.</span></label>
+        <label class="checkbox-row"><input type="checkbox" required><span><strong>Refunds:</strong> The $25 design deposit is non-refundable as it covers design labor. If I cancel after deposit but before approval, the deposit is forfeited. If I cancel before the deposit is paid, no charge applies.</span></label>
         <label class="checkbox-row" style="background:var(--accent);border:2.5px solid var(--ink);border-radius:12px;padding:14px 16px;margin-top:6px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-.4deg)"><input type="checkbox" name="goodPup" value="yes" required><span><strong>Most importantly 🐾:</strong> Yes, I am a good boy / good girl / good pup. <em>(Required by Kokuro. No exceptions.)</em></span></label>
         <label class="checkbox-row"><input type="checkbox" name="promoConsent"><span style="color:var(--color-text-secondary)"><strong style="color:var(--color-text-primary)">Promotional use (optional):</strong> I'm happy for Kokuro Customs (@kokurothewolf) to share mockups and photos of my completed order on TikTok and Instagram. My fursona name may be mentioned. I can change my mind at any time by DM.</span></label>
       </div>
@@ -2749,14 +2356,12 @@ async function submitCommission(e) {
     submitData.append('phone', data.phone || 'Not provided');
     submitData.append('payment_method', data.paymentMethod || 'Not specified');
     submitData.append('payment_username', data.paymentUsername || 'Not provided');
-    submitData.append('deposit_paid', `${money(cart.length * 25)} design deposit`);
-    submitData.append('balance_due', `${money(payload.cart_total - cart.length * 25)} due after mockup approval`);
+    submitData.append('deposit_paid', '$25 design deposit');
+    submitData.append('balance_due', `$${payload.cart_total - 25} due after mockup approval`);
     submitData.append('copyright_confirmed', data.copyrightOk ? 'Yes' : 'No');
     submitData.append('promo_consent', data.promoConsent ? 'Yes - approved for promotional use' : 'No - do not use for promotion');
-    submitData.append('estimated_tax', `${money(payload.cart_total * taxRate())} (${taxLabel()} — exact calculated at fulfillment)`);
-    submitData.append('estimated_total', `${money(payload.cart_total * (1 + taxRate()))}`);
-    submitData.append('currency', currentCurrency);
-    submitData.append('display_total', money(payload.cart_total * (1 + taxRate())));
+    submitData.append('estimated_tax', `$${(payload.cart_total * 0.08).toFixed(2)} (8% estimate — exact calculated at fulfillment)`);
+    submitData.append('estimated_total', `$${(payload.cart_total * 1.08).toFixed(2)}`);
     submitData.append('order_reference', window._lastReceipt ? window._lastReceipt.orderRef : 'N/A');
 
     // Files sent separately via Instagram/Telegram/Discord — not submitted through form to ensure reliable delivery
@@ -2785,7 +2390,7 @@ async function submitCommission(e) {
       window._lastReceipt = {
         items: [...cart],
         subtotal: cart.reduce((s,i) => s + i.price * i.qty, 0),
-        deposit: cart.length * 25,
+        deposit: 25,
         name: data.fullName,
         email: data.email,
         fursonaName: data.fursonaName,
@@ -2842,7 +2447,7 @@ function renderReceipt() {
   const r = window._lastReceipt;
   const el = document.getElementById('receiptBlock');
   if (!r || !el) return;
-  const balance = Math.max(0, r.subtotal * (1 + taxRate()) - r.deposit);
+  const balance = parseFloat((r.subtotal * 1.08 - r.deposit).toFixed(2));
   const itemRows = r.items.map(i => `
     <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--card-border);font-size:13px;">
       <div>
@@ -2851,7 +2456,7 @@ function renderReceipt() {
           Size: ${i.size}${i.frontText ? ' · Front: '+i.frontText : ''}${i.number ? ' · #'+i.number : ''}
         </div>
       </div>
-      <div style="font-weight:500;color:var(--text)">${money(i.price * i.qty)}</div>
+      <div style="font-weight:500;color:var(--text)">$${i.price * i.qty}</div>
     </div>`).join('');
 
   el.innerHTML = `
@@ -2877,26 +2482,26 @@ function renderReceipt() {
       <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Items ordered</div>
         ${itemRows}
-        <div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:13px;color:var(--text-muted)"><span>Commission subtotal</span><span>${money(r.subtotal)}</span></div>
-      <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:var(--text-muted)"><span>${taxLabel()}</span><span>${money(r.subtotal * taxRate())}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:13px;color:var(--text-muted)"><span>Commission subtotal</span><span>$${r.subtotal}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:var(--text-muted)"><span>Estimated tax (8%)</span><span>$${(r.subtotal * 0.08).toFixed(2)}</span></div>
       </div>
 
       <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Payment breakdown</div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
           <span style="color:var(--text-muted)">Design deposit ${r.paymentMethod ? '('+r.paymentMethod+' @'+r.paymentUsername+')' : ''}</span>
-          <span style="color:#5cb85c;font-weight:600">- ${money(r.deposit)} paid</span>
+          <span style="color:#5cb85c;font-weight:600">- $${r.deposit} paid</span>
         </div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:15px;font-weight:600;border-top:1px solid var(--card-border);margin-top:6px;padding-top:12px;">
           <span style="color:var(--text)">Balance due after mockup approval</span>
-          <span style="color:var(--red-bright)">${money(balance)}</span>
+          <span style="color:var(--red-bright)">$${balance}</span>
         </div>
       </div>
 
       <div style="padding:14px 20px;background:#0d0d0d;">
         <div style="font-size:12px;color:var(--text-muted);line-height:1.7">
           <strong style="color:var(--text)">What happens next:</strong> I'll review your order and contact you via ${r.paymentMethod || 'your preferred method'} within 24 hours to confirm your deposit was received. Once confirmed, design starts — mockup delivered in 3–5 business days.<br>
-          <strong style="color:var(--text)">Next step:</strong> Send your ref sheet and reference images via Instagram or Telegram — include your order reference number <strong style="color:var(--red-bright)">${r.orderRef}</strong> so I can match them to your commission.<br><br>
+          <strong style="color:var(--text)">Next step:</strong> Send your ref sheet and reference images via Instagram, Telegram, or Discord — include your order reference number <strong style="color:var(--red-bright)">${r.orderRef}</strong> so I can match them to your commission.<br><br>
           Questions? DM <a href="https://tiktok.com/@kokurothewolf" style="color:var(--red-bright)">@kokurothewolf</a>
         </div>
       </div>
@@ -2906,8 +2511,6 @@ function renderReceipt() {
 // ========== INIT ==========
 updateCartCount();
 handleRoute();
-document.body.setAttribute('data-cur', currentCurrency);
-(function() { const cs = document.getElementById('curSelect'); if (cs) cs.value = currentCurrency; })();
 </script>
 </body>
 </html>
