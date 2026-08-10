@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Lilita+One&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <script src="https://www.paypal.com/sdk/js?client-id=BAAZ_LCBpaksDwK5aIHKl9_HSoyd5mHFJuOVPRJHHDRBa7rxvcvlB05wEoTAa9wetxLm4l7Qlt3JGUpxEQ&components=hosted-buttons&enable-funding=venmo&currency=USD" crossorigin="anonymous" async></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   /* ============================================================
      KOKURO CUSTOMS — "Con Floor Pop" theme
@@ -547,6 +548,10 @@
   .pdp-input:focus, .pdp-select:focus, .pdp-textarea:focus { outline: none; box-shadow: 3px 3px 0 var(--primary); }
   .pdp-textarea { resize: vertical; min-height: 80px; }
   .pdp-helper { font-family: 'Caveat', cursive; font-size: 15px; color: var(--ink-soft); margin-top: 6px; }
+  .pdp-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pdp-swatch { width: 34px; height: 34px; border-radius: 999px; border: 2.5px solid var(--ink); cursor: pointer; padding: 0; box-shadow: 2px 2px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+  .pdp-swatch:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--ink); }
+  .pdp-swatch.selected { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--primary); }
   .pdp-add-btn {
     width: 100%; background: var(--primary); border: var(--border-w) solid var(--ink); color: #fff;
     font-family: 'Bagel Fat One', sans-serif; font-size: 18px; letter-spacing: .02em;
@@ -1922,12 +1927,16 @@ function setCurrency(code) {
 }
 
 // ========== PRODUCT DATA ==========
-const PRODUCTS = [{"id":"baseball-jersey","name":"Baseball Jersey","price":85,"category":"jersey","badge":null,"desc":"All-over sublimation print. Custom name, number, colors, and patches based on your fursona.","long_desc":"Our flagship piece. A button-front baseball jersey with full all-over sublimation printing means the entire jersey — front, back, sleeves, and side panels — becomes your canvas. Custom name across the chest, number on the back, sleeve patches, pinstripes, color blocking. The Kokuro jersey is the perfect example of what's possible.","features":["100% polyester sublimation fabric","Button-front athletic cut","Vibrant all-over print","Tagless interior","Machine washable cold"],"image":"assets/products/baseball-jersey.jpg","has_real_mockup":true,"mockup_back":"assets/products/baseball-jersey-back.jpg"},{"id":"hockey-jersey","name":"Hockey Jersey","price":95,"category":"jersey","badge":null,"desc":"Full sublimation hockey-cut jersey with lace-up collar.","long_desc":"Premium hockey-cut jersey with traditional lace-up collar. Custom name and number, shoulder patches, color-blocked yoke, and side striping. Looks just as good at a con as it does on the ice.","features":["Premium polyester construction","Traditional lace-up collar","Shoulder patch zones","Full color blocking","Machine washable cold"],"image":"assets/products/hockey-jersey.jpg","has_real_mockup":true},{"id":"basketball-jersey","name":"Basketball Jersey","price":75,"category":"jersey","badge":null,"desc":"Sleeveless sublimation jersey with custom name, number, and side panel design.","long_desc":"Sleeveless mesh basketball jersey with V-neck. Custom name across the chest, number on the back, side panel color blocking. Pairs perfectly with our matching athletic shorts for a full set.","features":["Lightweight mesh fabric","V-neck collar","Sleeveless athletic cut","Side panel zones","Machine washable cold"],"image":"assets/products/basketball-jersey.jpg","has_real_mockup":true},{"id":"unisex-tee","name":"Men's Crew Neck Tee","price":50,"category":"tops","badge":null,"desc":"All-over print cotton crew neck tee. Custom fursona graphic front and back.","long_desc":"Premium cotton crew neck tee with full all-over print. Your fursona design covers the whole garment. Soft and built for everyday wear.","features":["100% combed cotton","Crew neck","All-over sublimation print","Reinforced seams","Machine washable warm"],"image":"assets/products/unisex-tee.jpg","has_real_mockup":true},{"id":"tank-top","name":"Tank Top","price":45,"category":"tops","badge":null,"desc":"Lightweight sublimation tank with all-over design.","long_desc":"All-over print sublimation tank top. Great for warm weather, conventions, and athletic wear. Your full fursona design wraps around the entire garment.","features":["Lightweight polyester","All-over sublimation print","Athletic racerback option","Breathable construction","Machine washable cold"],"image":"assets/products/tank-top.jpg","has_real_mockup":true},{"id":"button-up","name":"Button-Up Shirt","price":70,"category":"tops","badge":null,"desc":"All-over print unisex button shirt. Custom fursona design front and back.","long_desc":"Casual button-up with full all-over sublimation. Show off your full fursona design front and back. Perfect for furry events where you want to look put-together but still on-theme.","features":["Polyester sublimation fabric","Classic collar and button placket","Short sleeve","All-over print front and back","Machine washable cold"],"image":"assets/products/button-up.jpg","has_real_mockup":true},{"id":"pullover-hoodie","name":"Pullover Hoodie","price":80,"category":"outerwear","badge":"Best Seller","desc":"Heavy recycled fleece pullover with double-lined hood and custom design.","long_desc":"Cozy fleece pullover hoodie with custom embroidered or sublimated design. Front kangaroo pocket, drawstring hood, and your fursona on a comfortable everyday staple.","features":["Recycled cotton-poly blend","Double-lined hood","Drop shoulders","Front kangaroo pocket","White or black drawstrings","Machine washable cold"],"image":"assets/products/pullover-hoodie.jpg","has_real_mockup":true,"mockup_back":"assets/products/pullover-hoodie-back.jpg"},{"id":"athletic-shorts","name":"Athletic Shorts","price":60,"category":"bottoms","badge":null,"desc":"Sublimation athletic shorts with custom design.","long_desc":"Lightweight athletic shorts with custom side panel and waistband design. Match with your basketball or baseball jersey for a full set. Drawstring waist and side pockets.","features":["Lightweight polyester","Drawstring elastic waist","Side pockets","All-over sublimation print","Machine washable cold"],"image":"assets/products/athletic-shorts.jpg","has_real_mockup":true},{"id":"joggers","name":"Wide-Leg Joggers","price":75,"category":"bottoms","badge":null,"desc":"All-over print wide-leg joggers. Relaxed oversized fit with full custom fursona design.","long_desc":"Wide-leg relaxed fit joggers with all-over sublimation print. Your fursona design covers the full garment. Drawstring waist, side pockets, and elastic cuffs.","features":["Polyester athletic fabric","Tapered fit with elastic cuffs","Side pockets","Drawstring waist","Machine washable cold"],"image":"assets/products/joggers.jpg","has_real_mockup":true},{"id":"track-pants","name":"Track Pants","price":70,"category":"bottoms","badge":null,"desc":"Full sublimation track pants with custom design.","long_desc":"Athletic track pants with custom side stripe, waistband design, and full fursona color scheme. Pairs perfectly with a matching jersey for a full athletic fit.","features":["Lightweight athletic polyester","Side pockets","Drawstring waist","Tapered ankle","Machine washable cold"],"image":"assets/products/track-pants.jpg","has_real_mockup":true},{"id":"snapback","name":"Snapback Cap","price":45,"category":"headwear","badge":null,"desc":"Structured flat-brim snapback with custom embroidery.","long_desc":"Structured flat-brim snapback with custom embroidered front panel featuring your fursona's icon, initials, or logo. Snap closure for adjustable fit.","features":["Structured 6-panel design","Flat brim","Snap closure","Custom embroidered front","Premium poly-cotton blend"],"image":"assets/products/snapback.jpg","has_real_mockup":true},{"id":"iphone-case","name":"MagSafe iPhone Case","price":45,"category":"accessories","badge":null,"desc":"Tough MagSafe case with full custom print. Fits most iPhone models.","long_desc":"Dual-layer tough case with MagSafe and full sublimation print. Drop-tested with raised camera bezel.","features":["MagSafe compatible","Dual-layer drop protection","Full sublimation print","Raised camera bezel","iPhone 13 through 16 series"],"image":"assets/products/iphone-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"samsung-case","name":"Samsung Tough Case","price":40,"category":"accessories","badge":null,"desc":"Tough dual-layer Samsung case with full custom print.","long_desc":"Dual-layer tough case with full sublimation print and precise cutouts. Drop-tested protection for most Galaxy models.","features":["Dual-layer construction","Full sublimation print","Precise cutouts","Raised camera bezel","Most Samsung Galaxy models"],"image":"assets/products/samsung-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"tote","name":"Tote Bag","price":40,"category":"accessories","badge":null,"desc":"Natural cotton tote with custom full-color print.","long_desc":"Heavy-duty natural cotton tote bag with custom full-color print. Perfect for furry meets, conventions, grocery runs, and carrying your daily essentials.","features":["100% cotton canvas","15\"x16\" carrying capacity","Reinforced handles","Single full-color print","Machine washable cold"],"image":"assets/products/tote.jpg","has_real_mockup":true},{"id":"patch","name":"Embroidered Patch","price":25,"category":"accessories","badge":null,"desc":"Custom embroidered patch with iron-on or sew-on backing.","long_desc":"Premium embroidered patch featuring your fursona or design element. Iron-on or sew-on backing. Add it to jackets, backpacks, vests anywhere.","features":["Premium thread embroidery","Iron-on or sew-on backing","Up to 4 inch diameter","Up to 8 colors","Packaged individually"],"image":"assets/products/patch.jpg","has_real_mockup":true},{"id":"tumbler","name":"Skinny Tumbler","price":45,"category":"drinkware","badge":null,"desc":"20oz stainless steel tumbler with full wrap design.","long_desc":"20oz stainless steel insulated tumbler with lid and metal straw. Full wrap custom sublimation print featuring your fursona. Keeps drinks cold for 24 hours or hot for 12.","features":["20oz capacity","Double-wall vacuum insulation","Stainless steel construction","Includes lid and metal straw","Full wrap sublimation print","Hand wash recommended"],"image":"assets/products/tumbler.jpg","has_real_mockup":true},{"id":"travel-mug","name":"Travel Mug","price":45,"category":"drinkware","badge":null,"desc":"25oz insulated travel mug with handle and custom print.","long_desc":"25oz stainless steel insulated travel mug with handle and clear sip lid. Full custom print with your fursona design. Keeps drinks hot or cold for hours. Great for commutes, cons, and everyday use.","features":["25oz capacity","Stainless steel insulated","Handle with comfortable grip","Clear sip lid","Custom sublimation print","Hand wash recommended"],"image":"assets/products/travel-mug.jpg","has_real_mockup":true,"mockup_back":null},{"id":"boxers","name":"Boxer Briefs","price":40,"category":"underwear","badge":"Best Seller","desc":"All-over print boxer briefs with custom fursona design.","long_desc":"All-over print boxer briefs with your fursona splashed across the entire garment — front, back, sides. Soft polyester-spandex blend with 4-way stretch and a branded waistband. Perfect for sleepwear, lounging, or just because.","features":["Polyester-spandex blend","All-over sublimation print","Branded waistband","4-way stretch","Machine washable cold"],"image":"assets/products/boxers.jpg","has_real_mockup":true,"mockup_back":"assets/products/boxers-back.jpg"},{"id":"bandana","name":"Bandana","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print bandana.","long_desc":"Soft satin bandana with all-over custom print. Wear it as a headwrap, neck wrap, wrist tie, or accessory. Great standalone piece or part of a full fursona outfit. 22\"x22\".","features":["Soft satin polyester","22\"x22\" square","All-over sublimation print","Hemmed edges","Machine washable cold"],"image":"assets/products/bandana.jpg","has_real_mockup":true},{"id":"pin-buttons","name":"Pin Buttons","price":20,"category":"accessories","badge":null,"desc":"Set of 3 custom pin buttons featuring your fursona design.","long_desc":"Set of 3 custom full-color pin buttons in mix of sizes. Perfect for bags, lanyards, jackets, and trading at cons.","features":["Set of 3 buttons","Mix of 3 sizes","Full-color print","Safety pin backing","Durable mylar coating"],"image":"assets/products/pin-buttons.jpg","has_real_mockup":true,"mockup_back":null},{"id":"neck-gaiter","name":"Neck Gaiter","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print neck gaiter. Wear as mask, headband, or neck wrap.","long_desc":"Stretchy all-over print neck gaiter with your fursona design. Wear as face covering, headband, or neck warmer. Con staple especially with snout and muzzle designs.","features":["Stretchy polyester","All-over sublimation print","Multiple wear styles","Seamless tubular construction","Machine washable cold"],"image":"assets/products/neck-gaiter.jpg","has_real_mockup":true,"mockup_back":null},{"id":"high-top-shoes","name":"Men's High-Top Canvas Shoes","price":95,"category":"footwear","badge":null,"desc":"Custom high-top canvas sneakers with all-over print of your fursona.","long_desc":"Walk in your fursona. High-top canvas shoes with custom all-over sublimation printing across both the inner and outer panels, plus the tongue. White rubber sole, metal eyelets, white laces. Designed to your ref sheet — colors, markings, claws, accents — all yours.","features":["Custom all-over print on canvas upper","Padded collar for ankle support","Metal eyelets, white laces","Vulcanized rubber sole","Men's US sizes 5–13"],"image":"assets/products/high-top-shoes.jpg","has_real_mockup":true},{"id":"pet-collar","name":"Pet Collar (Wink Wink)","price":30,"category":"pets","badge":"Top Tier","desc":"For your real-life four-legged companion. Or, you know. Whoever's wearing it.","long_desc":"Officially: a custom-printed adjustable collar for your IRL pet — cat, small dog, medium dog. We sublimate your fursona, your name, a matching design to your jersey, whatever you want, onto soft polyester webbing with a comfy black-lined interior, an adjustable buckle, and a D-ring for tags and a leash.\n\nUnofficially: we know our audience. We're not gonna ask what you're doing with it. Kokuro is a professional. Kokuro does not judge. Kokuro just designs really nice collars.","features":["Soft 100% polyester webbing with full-color sublimation","Black lining + padding (comfy for necks of all species)","Adjustable metal buckle, 1\" (2.54 cm) width","D-ring rated for a leash, tags, or… whatever you clip on it 👀","Three sizes: S, M, L — see chart for neck range","No questions asked. Truly. We will not ask."],"image":"assets/products/pet-collar.jpg","mockup_back":"assets/products/pet-collar-back.jpg","has_real_mockup":true},{"id":"sherpa-blanket","name":"Sublimated Sherpa Blanket","price":55,"sizePrices":{"Throw":55,"Twin":65,"Queen":85},"category":"home","badge":"New","desc":"Custom sherpa blanket with full-color sublimation print on top, plush sherpa on the back. Three sizes.","long_desc":"Wrap yourself in your fursona. Velvety microfiber on top with a full-color, all-over sublimation print, plus warm white sherpa on the reverse. The entire top surface is your canvas — single big fursona portrait, repeating pattern, full ref-sheet collage, totally your call. Comes in three sizes: a personal-size throw, a generous twin, and a flat-out enormous queen. Couch nap with character.","features":["Full-color sublimation print across the entire top","Velvety microfiber face, plush white sherpa back","Three sizes — Throw (37\"×57\"), Twin (50\"×60\"), Queen (60\"×80\")","Hemmed edges, no fraying","Machine washable cold, tumble dry low"],"image":null,"has_real_mockup":false,"mockup_back":null},{"id":"letterman-jacket","name":"Heavyweight Letterman Jacket","price":115,"category":"outerwear","badge":"New","desc":"Heavyweight varsity jacket with contrast sleeves and snap closure. Custom DTF print on the chest, back, and both sleeves.","long_desc":"Big varsity energy. A heavyweight letterman with a structured fit, ribbed knit collar / cuffs / waistband, contrast color sleeves, and a snap-button front. Brushed fleece interior for warmth. We DTF-print your fursona art on the left chest, the full back, and down both long sleeves — perfect for crew logos, your name, your @, a full back illustration, or all four.\n\nNot all-over print: design lives on placed print zones (chest patch, back panel, sleeve runs). Pairs with the pullover hoodie if you're building a full kit.","features":["80% ring-spun cotton, 20% polyester (Heather Grey: 65/35)","Heavyweight 9.73 oz/yd² (330 g/m²) — built for fall/winter","Brushed fleece interior, ribbed knit collar / cuffs / waistband","Snap-button front, slash side pockets, contrast sleeves","DTF print zones: left chest, full back, both long sleeves","OEKO-TEX Standard 100 certified blank"],"image":"assets/products/letterman-jacket.png","has_real_mockup":true,"mockup_back":null,"sizes":["S","M","L","XL","2XL","3XL"]}];
+const PRODUCTS = [{"id":"baseball-jersey","name":"Baseball Jersey","price":85,"category":"jersey","badge":null,"desc":"All-over sublimation print. Custom name, number, colors, and patches based on your fursona.","long_desc":"Our flagship piece. A button-front baseball jersey with full all-over sublimation printing means the entire jersey — front, back, sleeves, and side panels — becomes your canvas. Custom name across the chest, number on the back, sleeve patches, pinstripes, color blocking. The Kokuro jersey is the perfect example of what's possible.","features":["100% polyester sublimation fabric","Button-front athletic cut","Vibrant all-over print","Tagless interior","Machine washable cold"],"image":"assets/products/baseball-jersey.jpg","has_real_mockup":true,"mockup_back":"assets/products/baseball-jersey-back.jpg"},{"id":"hockey-jersey","name":"Hockey Jersey","price":95,"category":"jersey","badge":null,"desc":"Full sublimation hockey-cut jersey with lace-up collar.","long_desc":"Premium hockey-cut jersey with traditional lace-up collar. Custom name and number, shoulder patches, color-blocked yoke, and side striping. Looks just as good at a con as it does on the ice.","features":["Premium polyester construction","Traditional lace-up collar","Shoulder patch zones","Full color blocking","Machine washable cold"],"image":"assets/products/hockey-jersey.jpg","has_real_mockup":true},{"id":"basketball-jersey","name":"Basketball Jersey","price":75,"category":"jersey","badge":null,"desc":"Sleeveless sublimation jersey with custom name, number, and side panel design.","long_desc":"Sleeveless mesh basketball jersey with V-neck. Custom name across the chest, number on the back, side panel color blocking. Pairs perfectly with our matching athletic shorts for a full set.","features":["Lightweight mesh fabric","V-neck collar","Sleeveless athletic cut","Side panel zones","Machine washable cold"],"image":"assets/products/basketball-jersey.jpg","has_real_mockup":true},{"id":"unisex-tee","name":"Men's Crew Neck Tee","price":50,"category":"tops","badge":null,"desc":"All-over print cotton crew neck tee. Custom fursona graphic front and back.","long_desc":"Premium cotton crew neck tee with full all-over print. Your fursona design covers the whole garment. Soft and built for everyday wear.","features":["100% combed cotton","Crew neck","All-over sublimation print","Reinforced seams","Machine washable warm"],"image":"assets/products/unisex-tee.jpg","has_real_mockup":true},{"id":"tank-top","name":"Tank Top","price":45,"category":"tops","badge":null,"desc":"Lightweight sublimation tank with all-over design.","long_desc":"All-over print sublimation tank top. Great for warm weather, conventions, and athletic wear. Your full fursona design wraps around the entire garment.","features":["Lightweight polyester","All-over sublimation print","Athletic racerback option","Breathable construction","Machine washable cold"],"image":"assets/products/tank-top.jpg","has_real_mockup":true},{"id":"button-up","name":"Button-Up Shirt","price":70,"category":"tops","badge":null,"desc":"All-over print unisex button shirt. Custom fursona design front and back.","long_desc":"Casual button-up with full all-over sublimation. Show off your full fursona design front and back. Perfect for furry events where you want to look put-together but still on-theme.","features":["Polyester sublimation fabric","Classic collar and button placket","Short sleeve","All-over print front and back","Machine washable cold"],"image":"assets/products/button-up.jpg","has_real_mockup":true},{"id":"pullover-hoodie","name":"Pullover Hoodie","price":80,"category":"outerwear","badge":"Best Seller","desc":"Heavy recycled fleece pullover with double-lined hood and custom design.","long_desc":"Cozy fleece pullover hoodie with custom embroidered or sublimated design. Front kangaroo pocket, drawstring hood, and your fursona on a comfortable everyday staple.","features":["Recycled cotton-poly blend","Double-lined hood","Drop shoulders","Front kangaroo pocket","White or black drawstrings","Machine washable cold"],"image":"assets/products/pullover-hoodie.jpg","has_real_mockup":true,"mockup_back":"assets/products/pullover-hoodie-back.jpg"},{"id":"athletic-shorts","name":"Athletic Shorts","price":60,"category":"bottoms","badge":null,"desc":"Sublimation athletic shorts with custom design.","long_desc":"Lightweight athletic shorts with custom side panel and waistband design. Match with your basketball or baseball jersey for a full set. Drawstring waist and side pockets.","features":["Lightweight polyester","Drawstring elastic waist","Side pockets","All-over sublimation print","Machine washable cold"],"image":"assets/products/athletic-shorts.jpg","has_real_mockup":true},{"id":"joggers","name":"Wide-Leg Joggers","price":75,"category":"bottoms","badge":null,"desc":"All-over print wide-leg joggers. Relaxed oversized fit with full custom fursona design.","long_desc":"Wide-leg relaxed fit joggers with all-over sublimation print. Your fursona design covers the full garment. Drawstring waist, side pockets, and elastic cuffs.","features":["Polyester athletic fabric","Tapered fit with elastic cuffs","Side pockets","Drawstring waist","Machine washable cold"],"image":"assets/products/joggers.jpg","has_real_mockup":true},{"id":"track-pants","name":"Track Pants","price":70,"category":"bottoms","badge":null,"desc":"Full sublimation track pants with custom design.","long_desc":"Athletic track pants with custom side stripe, waistband design, and full fursona color scheme. Pairs perfectly with a matching jersey for a full athletic fit.","features":["Lightweight athletic polyester","Side pockets","Drawstring waist","Tapered ankle","Machine washable cold"],"image":"assets/products/track-pants.jpg","has_real_mockup":true},{"id":"snapback","name":"Snapback Cap","price":45,"category":"headwear","badge":null,"desc":"Structured flat-brim snapback with custom embroidery.","long_desc":"Structured flat-brim snapback with custom embroidered front panel featuring your fursona's icon, initials, or logo. Snap closure for adjustable fit.","features":["Structured 6-panel design","Flat brim","Snap closure","Custom embroidered front","Premium poly-cotton blend"],"image":"assets/products/snapback.jpg","has_real_mockup":true},{"id":"iphone-case","name":"MagSafe iPhone Case","price":45,"category":"accessories","badge":null,"desc":"Tough MagSafe case with full custom print. Fits most iPhone models.","long_desc":"Dual-layer tough case with MagSafe and full sublimation print. Drop-tested with raised camera bezel.","features":["MagSafe compatible","Dual-layer drop protection","Full sublimation print","Raised camera bezel","iPhone 13 through 16 series"],"image":"assets/products/iphone-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"samsung-case","name":"Samsung Tough Case","price":40,"category":"accessories","badge":null,"desc":"Tough dual-layer Samsung case with full custom print.","long_desc":"Dual-layer tough case with full sublimation print and precise cutouts. Drop-tested protection for most Galaxy models.","features":["Dual-layer construction","Full sublimation print","Precise cutouts","Raised camera bezel","Most Samsung Galaxy models"],"image":"assets/products/samsung-case.jpg","has_real_mockup":true,"mockup_back":null},{"id":"tote","name":"Tote Bag","price":40,"category":"accessories","badge":null,"desc":"Natural cotton tote with custom full-color print.","long_desc":"Heavy-duty natural cotton tote bag with custom full-color print. Perfect for furry meets, conventions, grocery runs, and carrying your daily essentials.","features":["100% cotton canvas","15\"x16\" carrying capacity","Reinforced handles","Single full-color print","Machine washable cold"],"image":"assets/products/tote.jpg","has_real_mockup":true},{"id":"patch","name":"Embroidered Patch","price":25,"category":"accessories","badge":null,"desc":"Custom embroidered patch with iron-on or sew-on backing.","long_desc":"Premium embroidered patch featuring your fursona or design element. Iron-on or sew-on backing. Add it to jackets, backpacks, vests anywhere.","features":["Premium thread embroidery","Iron-on or sew-on backing","Up to 4 inch diameter","Up to 8 colors","Packaged individually"],"image":"assets/products/patch.jpg","has_real_mockup":true},{"id":"tumbler","name":"Skinny Tumbler","price":45,"category":"drinkware","badge":null,"desc":"20oz stainless steel tumbler with full wrap design.","long_desc":"20oz stainless steel insulated tumbler with lid and metal straw. Full wrap custom sublimation print featuring your fursona. Keeps drinks cold for 24 hours or hot for 12.","features":["20oz capacity","Double-wall vacuum insulation","Stainless steel construction","Includes lid and metal straw","Full wrap sublimation print","Hand wash recommended"],"image":"assets/products/tumbler.jpg","has_real_mockup":true},{"id":"travel-mug","name":"Travel Mug","price":45,"category":"drinkware","badge":null,"desc":"25oz insulated travel mug with handle and custom print.","long_desc":"25oz stainless steel insulated travel mug with handle and clear sip lid. Full custom print with your fursona design. Keeps drinks hot or cold for hours. Great for commutes, cons, and everyday use.","features":["25oz capacity","Stainless steel insulated","Handle with comfortable grip","Clear sip lid","Custom sublimation print","Hand wash recommended"],"image":"assets/products/travel-mug.jpg","has_real_mockup":true,"mockup_back":null},{"id":"boxers","name":"Boxer Briefs","price":40,"category":"underwear","badge":"Best Seller","desc":"All-over print boxer briefs with custom fursona design.","long_desc":"All-over print boxer briefs with your fursona splashed across the entire garment — front, back, sides. Soft polyester-spandex blend with 4-way stretch and a branded waistband. Perfect for sleepwear, lounging, or just because.","features":["Polyester-spandex blend","All-over sublimation print","Branded waistband","4-way stretch","Machine washable cold"],"image":"assets/products/boxers.jpg","has_real_mockup":true,"mockup_back":"assets/products/boxers-back.jpg"},{"id":"bandana","name":"Bandana","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print bandana.","long_desc":"Soft satin bandana with all-over custom print. Wear it as a headwrap, neck wrap, wrist tie, or accessory. Great standalone piece or part of a full fursona outfit. 22\"x22\".","features":["Soft satin polyester","22\"x22\" square","All-over sublimation print","Hemmed edges","Machine washable cold"],"image":"assets/products/bandana.jpg","has_real_mockup":true},{"id":"pin-buttons","name":"Pin Buttons","price":20,"category":"accessories","badge":null,"desc":"Set of 3 custom pin buttons featuring your fursona design.","long_desc":"Set of 3 custom full-color pin buttons in mix of sizes. Perfect for bags, lanyards, jackets, and trading at cons.","features":["Set of 3 buttons","Mix of 3 sizes","Full-color print","Safety pin backing","Durable mylar coating"],"image":"assets/products/pin-buttons.jpg","has_real_mockup":true,"mockup_back":null},{"id":"neck-gaiter","name":"Neck Gaiter","price":30,"category":"accessories","badge":null,"desc":"Custom all-over print neck gaiter. Wear as mask, headband, or neck wrap.","long_desc":"Stretchy all-over print neck gaiter with your fursona design. Wear as face covering, headband, or neck warmer. Con staple especially with snout and muzzle designs.","features":["Stretchy polyester","All-over sublimation print","Multiple wear styles","Seamless tubular construction","Machine washable cold"],"image":"assets/products/neck-gaiter.jpg","has_real_mockup":true,"mockup_back":null},{"id":"high-top-shoes","name":"Men's High-Top Canvas Shoes","price":95,"category":"footwear","badge":null,"desc":"Custom high-top canvas sneakers with all-over print of your fursona.","long_desc":"Walk in your fursona. High-top canvas shoes with custom all-over sublimation printing across both the inner and outer panels, plus the tongue. White rubber sole, metal eyelets, white laces. Designed to your ref sheet — colors, markings, claws, accents — all yours.","features":["Custom all-over print on canvas upper","Padded collar for ankle support","Metal eyelets, white laces","Vulcanized rubber sole","Men's US sizes 5–13"],"image":"assets/products/high-top-shoes.jpg","has_real_mockup":true},{"id":"pet-collar","name":"Pet Collar (Wink Wink)","price":30,"category":"pets","badge":"Top Tier","desc":"For your real-life four-legged companion. Or, you know. Whoever's wearing it.","long_desc":"Officially: a custom-printed adjustable collar for your IRL pet — cat, small dog, medium dog. We sublimate your fursona, your name, a matching design to your jersey, whatever you want, onto soft polyester webbing with a comfy black-lined interior, an adjustable buckle, and a D-ring for tags and a leash.\n\nUnofficially: we know our audience. We're not gonna ask what you're doing with it. Kokuro is a professional. Kokuro does not judge. Kokuro just designs really nice collars.","features":["Soft 100% polyester webbing with full-color sublimation","Black lining + padding (comfy for necks of all species)","Adjustable metal buckle, 1\" (2.54 cm) width","D-ring rated for a leash, tags, or… whatever you clip on it 👀","Three sizes: S, M, L — see chart for neck range","No questions asked. Truly. We will not ask."],"image":"assets/products/pet-collar.jpg","mockup_back":"assets/products/pet-collar-back.jpg","has_real_mockup":true},{"id":"sherpa-blanket","name":"Sublimated Sherpa Blanket","price":55,"sizePrices":{"Throw":55,"Large Throw":65,"XL Throw":85},"category":"home","badge":"New","desc":"Custom sherpa blanket with full-color sublimation print on top, plush sherpa on the back. Three sizes.","long_desc":"Wrap yourself in your fursona. Velvety microfiber on top with a full-color, all-over sublimation print, plus warm white sherpa on the reverse. The entire top surface is your canvas — single big fursona portrait, repeating pattern, full ref-sheet collage, totally your call. Comes in three sizes: a personal-size throw, a generous couch-size throw, and a flat-out enormous XL throw. Couch nap with character.","features":["Full-color sublimation print across the entire top","Velvety microfiber face, plush white sherpa back","Three sizes — Throw (37\"×57\"), Large Throw (50\"×60\"), XL Throw (60\"×80\")","Hemmed edges, no fraying","Machine washable cold, tumble dry low"],"image":"assets/products/sherpa-blanket.png","has_real_mockup":true,"mockup_back":null},{"id":"letterman-jacket","name":"Heavyweight Letterman Jacket","price":115,"category":"outerwear","badge":"New","desc":"Heavyweight varsity jacket with contrast sleeves and snap closure. Custom DTF print on the chest, back, and both sleeves.","long_desc":"Big varsity energy. A heavyweight letterman with a structured fit, ribbed knit collar / cuffs / waistband, contrast color sleeves, and a snap-button front. Brushed fleece interior for warmth. We DTF-print your fursona art on the left chest, the full back, and down both long sleeves — perfect for crew logos, your name, your @, a full back illustration, or all four.\n\nNot all-over print: design lives on placed print zones (chest patch, back panel, sleeve runs). Pairs with the pullover hoodie if you're building a full kit.","features":["80% ring-spun cotton, 20% polyester (Heather Grey: 65/35)","Heavyweight 9.73 oz/yd² (330 g/m²) — built for fall/winter","Brushed fleece interior, ribbed knit collar / cuffs / waistband","Snap-button front, slash side pockets, contrast sleeves","DTF print zones: left chest, full back, both long sleeves","OEKO-TEX Standard 100 certified blank"],"image":"assets/products/letterman-jacket.png","has_real_mockup":true,"mockup_back":null,"sizes":["S","M","L","XL","2XL","3XL"]},{"id":"fursona-bar-tee","name":"Fursona Bar Men's Fitted T-Shirt","price":45,"category":"tops","badge":"New","desc":"Fitted tee with the Fursona Bar graphic, printed front and center. Pick your color.","long_desc":"A snugger, more tailored cut than our all-over sublimation tees. The Fursona Bar graphic is screen-printed front and center on a soft cotton blank — choose your garment color and size. Not a custom sublimation piece like the rest of the shop; same graphic on every shirt.","features":["100% combed cotton, fitted cut","Screen-printed graphic (front)","Available in 5 colors","Tagless interior","Machine washable cold"],"colors":[{"name":"Black","hex":"#0c0b0b"},{"name":"Midnight Navy","hex":"#1d242e"},{"name":"Royal Blue","hex":"#274c97"},{"name":"Heather Grey","hex":"#9a978e"},{"name":"White","hex":"#ffffff"}],"image":"assets/products/fursona-bar-tee.jpg","has_real_mockup":true,"mockup_back":"assets/products/fursona-bar-tee-model.jpg"}];
 
 const SIZE_CHARTS = {
   apparel: {
     headers: ['Size','Chest (in)','Length (in)','Sleeve (in)'],
     rows: [['XS','32–34','27','7.5'],['S','35–37','28','8'],['M','38–40','29','8.5'],['L','41–43','30','9'],['XL','44–46','31','9.5'],['2XL','47–49','32','10'],['3XL','50–53','33','10.5'],['4XL','54–57','34','11']]
+  },
+  fitted_tee: {
+    headers: ['Size','Length (in)','Width (in)','Length (cm)','Width (cm)'],
+    rows: [['XS','27','17\u00bd','68.6','44.5'],['S','28','19','71','48.3'],['M','29','20\u00bd','73.7','52'],['L','30','22','76.2','56'],['XL','31','24','78.7','61'],['2XL','32','26','81.3','66'],['3XL','33','28','83.8','71']]
   },
   bottoms: {
     headers: ['Size','Waist (in)','Hip (in)','Inseam (in)'],
@@ -1958,14 +1967,15 @@ const SIZE_CHARTS = {
   blanket: {
     headers: ['Size','Dimensions','Best For','Price'],
     rows: [
-      ['Throw', '37" × 57"', 'Personal · lap',          '$55'],
-      ['Twin',  '50" × 60"', 'Couch · twin bed',        '$65'],
-      ['Queen', '60" × 80"', 'Larger bed · cosplay BG', '$85']
+      ['Throw',       '37" × 57"', 'Personal · lap',                    '$55'],
+      ['Large Throw', '50" × 60"', 'Couch throw',                        '$65'],
+      ['XL Throw',    '60" × 80"', 'Big couch throw · cosplay backdrop', '$85']
     ]
   }
 };
 
 function getSizeChartType(p) {
+  if (p.id === 'fursona-bar-tee') return 'fitted_tee';
   if (p.category === 'jersey' || p.category === 'tops' || p.category === 'outerwear') return 'apparel';
   if (p.category === 'bottoms') return 'bottoms';
   if (p.category === 'underwear') return 'underwear';
@@ -2151,9 +2161,12 @@ function renderProduct(id) {
 
   const fullChart = SIZE_CHARTS[getSizeChartType(p)];
   // Optional per-product size filter — restrict which sizes from the chart are shown/orderable.
-  const sizeChart = p.sizes
+  let sizeChart = p.sizes
     ? { headers: fullChart.headers, rows: fullChart.rows.filter(r => p.sizes.includes(r[0])) }
-    : fullChart;
+    : { headers: fullChart.headers, rows: fullChart.rows.map(r => r.slice()) };
+  if (getSizeChartType(p) === 'blanket' && p.sizePrices) {
+    sizeChart = { headers: sizeChart.headers, rows: sizeChart.rows.map(r => [r[0], r[1], r[2], money(p.sizePrices[r[0]])]) };
+  }
   const sizes = sizeChart.rows.map(r => r[0]);
 
   const mainImg = p.image
@@ -2164,7 +2177,9 @@ function renderProduct(id) {
     ? `<div class="pdp-thumb" onclick="swapPdpImg(this, '${p.mockup_back ? 'back' : ''}', '${p.id}')"><img src="${ASSET_BASE}${p.mockup_back}" alt="Back"></div>`
     : '';
 
-  const sizeNote = p.category === 'home'
+  const sizeNote = p.id === 'fursona-bar-tee'
+    ? 'Garment measurements, not body measurements. May vary by up to 2" (5 cm).'
+    : p.category === 'home'
     ? 'Dimensions are finished blanket size. Sherpa side is white.'
     : (p.category === 'drinkware' || p.category === 'accessories' || p.category === 'pets')
       ? 'One-size-fits-most. See chart for exact dimensions.'
@@ -2181,7 +2196,15 @@ function renderProduct(id) {
     return `<option value="${s}">${s}</option>`;
   }).join('');
   const sizeOnChange = p.sizePrices ? ` onchange="updateSizedPrice(this)"` : '';
-  let formFields = `<div class="pdp-form-row">
+  const colorFieldHtml = p.colors ? `<div class="pdp-form-row">
+    <label class="pdp-label">Color <span class="req">*</span></label>
+    <div class="pdp-swatches" id="pdpColorSwatches">
+      ${p.colors.map((c,i) => `<button type="button" class="pdp-swatch${i===0?' selected':''}" data-color="${c.name}" style="background:${c.hex}" onclick="selectPdpColor(this)" title="${c.name}"></button>`).join('')}
+    </div>
+    <div class="pdp-helper" id="pdpColorLabel">${p.colors[0].name}</div>
+    <input type="hidden" id="pdpColor" value="${p.colors[0].name}">
+  </div>` : '';
+  let formFields = colorFieldHtml + `<div class="pdp-form-row">
     <label class="pdp-label">Size <span class="req">*</span></label>
     <select class="pdp-select" id="pdpSize"${sizeOnChange} required>
       <option value="">Select size...</option>
@@ -2213,6 +2236,35 @@ function renderProduct(id) {
     </div>`;
   }
 
+  if (p.id === 'fursona-bar-tee') {
+    formFields += `<div class="pdp-form-row">
+      <label class="pdp-label">Fursona Name <span class="req">*</span></label>
+      <input type="text" class="pdp-input" id="pdpFursonaName" placeholder="e.g. Kokuro" required>
+    </div>
+    <div class="pdp-form-row">
+      <label class="pdp-label">Location Name <span class="req">*</span></label>
+      <input type="text" class="pdp-input" id="pdpLocationName" placeholder="e.g. Cleveland, OH" required>
+    </div>
+    <div class="pdp-form-row">
+      <label class="pdp-label">Bar Type <span class="req">*</span></label>
+      <select class="pdp-select" id="pdpBarType" required>
+        <option value="">Select...</option>
+        <option>Bar</option><option>Club</option><option>Tavern</option><option>Cabaret</option><option>Lounge</option><option>Taproom</option><option>Saloon</option><option>Pub</option>
+      </select>
+    </div>
+    <div class="pdp-form-row">
+      <label class="pdp-label">Animal Type <span class="req">*</span></label>
+      <select class="pdp-select" id="pdpAnimalType" required>
+        <option value="">Select...</option>
+        <option>Dog</option><option>Wolfdog</option><option>Wolf</option><option>Lion</option><option>Tiger</option><option>Cat</option><option>Horse</option><option>Dragon</option><option>Rabbit</option>
+      </select>
+    </div>
+    <div class="pdp-form-row">
+      <label class="pdp-label">Est. Date <span class="req">*</span></label>
+      <input type="text" class="pdp-input" id="pdpEstDate" placeholder="e.g. 2025" required>
+    </div>`;
+  }
+
   formFields += `<div class="pdp-form-row">
     <label class="pdp-label">Quantity</label>
     <select class="pdp-select" id="pdpQty">
@@ -2234,7 +2286,7 @@ function renderProduct(id) {
       <div class="pdp-info-cat">${getCategoryLabel(p.category)}</div>
       <h1 class="pdp-name">${p.name}</h1>
       <div class="pdp-price" id="pdpPrice" data-base="${p.price}">${p.sizePrices ? `<span class="pdp-price-from">From </span>` : ''}<span id="pdpPriceAmt">${moneyRound(p.price)}</span></div>
-      <div class="pdp-price-note">${p.sizePrices ? 'Price varies by size · ' : ''}Includes custom design · Shipping calculated at checkout</div>
+      <div class="pdp-price-note">${p.sizePrices ? 'Price varies by size · ' : ''}${p.id === 'fursona-bar-tee' ? 'Ready-made graphic print' : 'Includes custom design'} · Shipping calculated at checkout</div>
       <p class="pdp-desc">${p.long_desc}</p>
 
       <div class="pdp-section-h">What's included</div>
@@ -2260,6 +2312,12 @@ function swapPdpImg(thumb) {
 }
 
 // Update the PDP price when a sized product's size changes
+function selectPdpColor(btn) {
+  document.querySelectorAll('.pdp-swatch').forEach(s => s.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('pdpColor').value = btn.dataset.color;
+  document.getElementById('pdpColorLabel').textContent = btn.dataset.color;
+}
 function updateSizedPrice(sel) {
   const opt = sel.options[sel.selectedIndex];
   const price = opt && opt.dataset.price;
@@ -2300,6 +2358,19 @@ function addToCart(productId) {
     qty: parseInt(document.getElementById('pdpQty').value) || 1,
     notes: document.getElementById('pdpNotes').value.trim()
   };
+  if (p.colors) item.color = document.getElementById('pdpColor').value;
+
+  if (p.id === 'fursona-bar-tee') {
+    item.fursonaName = document.getElementById('pdpFursonaName').value.trim();
+    item.locationName = document.getElementById('pdpLocationName').value.trim();
+    item.barType = document.getElementById('pdpBarType').value;
+    item.animalType = document.getElementById('pdpAnimalType').value;
+    item.estDate = document.getElementById('pdpEstDate').value.trim();
+    if (!item.fursonaName || !item.locationName || !item.barType || !item.animalType || !item.estDate) {
+      alert('Please fill in fursona name, location name, bar type, animal type, and est. date.');
+      return;
+    }
+  }
 
   if (isJersey(p)) {
     item.frontText = document.getElementById('pdpFrontText').value.trim();
@@ -2343,9 +2414,15 @@ function renderCart() {
       : `<div class="cart-item-img blank">?</div>`;
 
     let specs = `<div class="cart-item-spec"><strong>Size:</strong> ${item.size}</div>`;
+    if (item.color) specs += `<div class="cart-item-spec"><strong>Color:</strong> ${item.color}</div>`;
     if (item.frontText) specs += `<div class="cart-item-spec"><strong>Front:</strong> ${item.frontText}</div>`;
     if (item.backText) specs += `<div class="cart-item-spec"><strong>Back:</strong> ${item.backText}</div>`;
     if (item.number) specs += `<div class="cart-item-spec"><strong>Number:</strong> ${item.number}</div>`;
+    if (item.fursonaName) specs += `<div class="cart-item-spec"><strong>Fursona:</strong> ${item.fursonaName}</div>`;
+    if (item.locationName) specs += `<div class="cart-item-spec"><strong>Location:</strong> ${item.locationName}</div>`;
+    if (item.barType) specs += `<div class="cart-item-spec"><strong>Bar Type:</strong> ${item.barType}</div>`;
+    if (item.animalType) specs += `<div class="cart-item-spec"><strong>Animal:</strong> ${item.animalType}</div>`;
+    if (item.estDate) specs += `<div class="cart-item-spec"><strong>Est.:</strong> ${item.estDate}</div>`;
     if (item.notes) specs += `<div class="cart-item-spec"><strong>Notes:</strong> ${item.notes}</div>`;
 
     return `<div class="cart-item">
@@ -2393,7 +2470,7 @@ function renderCheckout() {
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const distinctItems = cart.length;
   const deposit = distinctItems * 25;
-  const itemSummary = cart.map(i => `<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--card-border)"><span>${i.name} (${i.size}) × ${i.qty}</span><span>${money(i.price * i.qty)}</span></div>`).join('');
+  const itemSummary = cart.map(i => `<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--card-border)"><span>${i.name} (${i.size}${i.color ? ', ' + i.color : ''}) × ${i.qty}</span><span>${money(i.price * i.qty)}</span></div>`).join('');
 
   document.getElementById('checkoutContent').innerHTML = `
     <h1 style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.03em;margin-bottom:8px">Checkout</h1>
@@ -2642,41 +2719,6 @@ function renderCheckout() {
     </form>
   `;
 
-  // Wire up file upload
-  document.getElementById('fileInput').addEventListener('change', handleFileUpload);
-}
-
-let uploadedFiles = [];
-const MAX_TOTAL_MB = 9;
-function handleFileUpload(e) {
-  const newFiles = Array.from(e.target.files);
-  const combined = uploadedFiles.concat(newFiles);
-  const totalBytes = combined.reduce((s, f) => s + f.size, 0);
-  const totalMB = totalBytes / (1024 * 1024);
-  if (totalMB > MAX_TOTAL_MB) {
-    const warningEl = document.getElementById('fileWarning');
-    if (warningEl) warningEl.style.display = 'block';
-    const allowed = newFiles.filter(f => {
-      const testTotal = uploadedFiles.reduce((s,x) => s + x.size, 0) + f.size;
-      return testTotal / (1024 * 1024) <= MAX_TOTAL_MB;
-    });
-    uploadedFiles = uploadedFiles.concat(allowed);
-  } else {
-    const warningEl = document.getElementById('fileWarning');
-    if (warningEl) warningEl.style.display = 'none';
-    uploadedFiles = combined;
-  }
-  renderFileList();
-}
-function renderFileList() {
-  const list = document.getElementById('fileList');
-  list.innerHTML = uploadedFiles.map((f, i) =>
-    `<div class="file-item"><span class="file-item-name">📄 ${f.name} (${(f.size/1024).toFixed(0)} KB)</span><button type="button" class="file-remove" onclick="removeFile(${i})">×</button></div>`
-  ).join('');
-}
-function removeFile(i) {
-  uploadedFiles.splice(i, 1);
-  renderFileList();
 }
 
 // ========== SUBMISSION ==========
@@ -2687,6 +2729,7 @@ async function submitCommission(e) {
   const data = Object.fromEntries(fd.entries());
 
   // Build a structured payload
+  const orderRef = 'KC-' + Date.now().toString(36).toUpperCase().slice(-6);
   const payload = {
     cart: cart,
     cart_total: cart.reduce((s, i) => s + i.price * i.qty, 0),
@@ -2726,11 +2769,24 @@ async function submitCommission(e) {
   // ============================================================
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgodvwrd';
 
+  // ============================================================
+  // EMAILJS — free client-side customer confirmation email.
+  // Autoresponder not needed; the page sends the email directly.
+  // Template vars used: to_email, customer_name, order_reference,
+  //   estimated_total, deposit, currency.
+  // ============================================================
+  const EMAILJS_PUBLIC_KEY = 'GoBXx8YQtRc1iz9J1';
+  const EMAILJS_SERVICE_ID = 'service_31a55ea';
+  const EMAILJS_TEMPLATE_ID = 'template_dfewwp9';
+  if (window.emailjs && !EMAILJS_PUBLIC_KEY.includes('YOUR-')) {
+    try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch (e) {}
+  }
+
   try {
     // Build a multipart form to include both data and files
     const submitData = new FormData();
     submitData.append('summary', `${cart.length} item commission for ${data.fursonaName} (${data.species})`);
-    submitData.append('cart_items', cart.map(i => `${i.qty}× ${i.name} (${i.size}) - $${i.price * i.qty}${i.frontText ? ' — Front: '+i.frontText : ''}${i.backText ? ', Back: '+i.backText : ''}${i.number ? ', #'+i.number : ''}${i.notes ? ' [NOTES: '+i.notes+']' : ''}`).join('\n'));
+    submitData.append('cart_items', cart.map(i => `${i.qty}× ${i.name} (${i.size}${i.color ? ', ' + i.color : ''}) - $${i.price * i.qty}${i.fursonaName ? ' — Fursona: '+i.fursonaName : ''}${i.locationName ? ', Location: '+i.locationName : ''}${i.barType ? ', Bar Type: '+i.barType : ''}${i.animalType ? ', Animal: '+i.animalType : ''}${i.estDate ? ', Est.: '+i.estDate : ''}${i.frontText ? ' — Front: '+i.frontText : ''}${i.backText ? ', Back: '+i.backText : ''}${i.number ? ', #'+i.number : ''}${i.notes ? ' [NOTES: '+i.notes+']' : ''}`).join('\n'));
     submitData.append('cart_total', `$${payload.cart_total}`);
     submitData.append('fursona_name', data.fursonaName);
     submitData.append('species', data.species);
@@ -2757,7 +2813,7 @@ async function submitCommission(e) {
     submitData.append('estimated_total', `${money(payload.cart_total * (1 + taxRate()))}`);
     submitData.append('currency', currentCurrency);
     submitData.append('display_total', money(payload.cart_total * (1 + taxRate())));
-    submitData.append('order_reference', window._lastReceipt ? window._lastReceipt.orderRef : 'N/A');
+    submitData.append('order_reference', orderRef);
 
     // Files sent separately via Instagram/Telegram/Discord — not submitted through form to ensure reliable delivery
 
@@ -2782,6 +2838,18 @@ async function submitCommission(e) {
     });
 
     if (response.ok) {
+      // Customer confirmation via EmailJS — best-effort, never blocks the order.
+      if (window.emailjs && !EMAILJS_PUBLIC_KEY.includes('YOUR-')) {
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: data.email,
+          email: data.email,
+          customer_name: data.fullName,
+          order_reference: orderRef,
+          currency: currentCurrency,
+          deposit: money(cart.length * 25),
+          estimated_total: money(payload.cart_total * (1 + taxRate()))
+        }).catch(err => console.warn('EmailJS confirmation failed (order still submitted):', err));
+      }
       window._lastReceipt = {
         items: [...cart],
         subtotal: cart.reduce((s,i) => s + i.price * i.qty, 0),
@@ -2791,7 +2859,7 @@ async function submitCommission(e) {
         fursonaName: data.fursonaName,
         paymentMethod: data.paymentMethod,
         paymentUsername: data.paymentUsername,
-        orderRef: 'KC-' + Date.now().toString(36).toUpperCase().slice(-6),
+        orderRef: orderRef,
         timestamp: new Date().toLocaleString('en-US', {dateStyle:'long', timeStyle:'short'})
       };
       cart = [];
@@ -2848,7 +2916,7 @@ function renderReceipt() {
       <div>
         <div style="font-weight:500;color:var(--text)">${i.qty}× ${i.name}</div>
         <div style="color:var(--text-muted);font-size:12px;margin-top:2px">
-          Size: ${i.size}${i.frontText ? ' · Front: '+i.frontText : ''}${i.number ? ' · #'+i.number : ''}
+          Size: ${i.size}${i.color ? ' · Color: '+i.color : ''}${i.fursonaName ? ' · Fursona: '+i.fursonaName : ''}${i.locationName ? ' · '+i.locationName : ''}${i.barType ? ' · '+i.barType : ''}${i.animalType ? ' · '+i.animalType : ''}${i.estDate ? ' · Est. '+i.estDate : ''}${i.frontText ? ' · Front: '+i.frontText : ''}${i.number ? ' · #'+i.number : ''}
         </div>
       </div>
       <div style="font-weight:500;color:var(--text)">${money(i.price * i.qty)}</div>
